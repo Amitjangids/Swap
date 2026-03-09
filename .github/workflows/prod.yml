@@ -1,4 +1,4 @@
-name: SonarQube Scan
+name: Sonar Scan
 
 on:
   push:
@@ -6,8 +6,8 @@ on:
       - production
 
 jobs:
-  sonarqube:
-    name: SonarQube
+  sonar:
+    name: SonarQube Scan
     runs-on: ubuntu-latest
 
     steps:
@@ -17,3 +17,4 @@ jobs:
         uses: SonarSource/sonarqube-scan-action@v2
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: https://sonarcloud.io
