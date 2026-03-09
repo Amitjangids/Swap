@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="40.502" height="38.145" viewBox="0 0 40.502 38.145">
+  <defs>
+    <linearGradient id="linear-gradient" x1="0.5" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#ceac53"/>
+      <stop offset="0.531" stop-color="#f6ea98"/>
+      <stop offset="1" stop-color="#dec164"/>
+    </linearGradient>
+  </defs>
+  <g id="Group_1" data-name="Group 1" transform="translate(3894 4733.645)">
+    <path id="Icon_awesome-hand-holding" data-name="Icon awesome-hand-holding" d="M39.748,23.07a2.327,2.327,0,0,0-3,0l-6.5,5.2a4.476,4.476,0,0,1-2.812.984H19.125a1.125,1.125,0,0,1,0-2.25H24.63a2.341,2.341,0,0,0,2.341-1.87A2.253,2.253,0,0,0,24.75,22.5H13.5a8.275,8.275,0,0,0-5.21,1.849L5.02,27h-3.9A1.128,1.128,0,0,0,0,28.125v6.75A1.128,1.128,0,0,0,1.125,36H26.212a4.505,4.505,0,0,0,2.813-.984l10.631-8.508A2.249,2.249,0,0,0,39.748,23.07Z" transform="translate(-3894 -4731.5)" fill="url(#linear-gradient)"/>
+    <path id="Icon_awesome-arrow-up" data-name="Icon awesome-arrow-up" d="M1.7,13.741.712,12.75a1.067,1.067,0,0,1,0-1.513L9.384,2.561a1.067,1.067,0,0,1,1.513,0l8.672,8.672a1.067,1.067,0,0,1,0,1.513l-.991.991a1.072,1.072,0,0,1-1.531-.018L11.928,8.345V21.172a1.069,1.069,0,0,1-1.071,1.071H9.428a1.069,1.069,0,0,1-1.071-1.071V8.345L3.234,13.723a1.065,1.065,0,0,1-1.531.018Z" transform="translate(-3863.609 -4711.402) rotate(180)" fill="url(#linear-gradient)"/>
+  </g>
+</svg>

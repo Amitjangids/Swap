@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="45.097" height="49.519" viewBox="0 0 45.097 49.519">
+  <defs>
+    <linearGradient id="linear-gradient" x1="0.5" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#ceac53"/>
+      <stop offset="0.531" stop-color="#f6ea98"/>
+      <stop offset="1" stop-color="#dec164"/>
+    </linearGradient>
+  </defs>
+  <g id="credit_card-hand-business-finance" data-name="credit card-hand-business-finance" transform="translate(0 0)">
+    <path id="Path_2608" data-name="Path 2608" d="M33,32.4a3.867,3.867,0,0,1,.8.734,4.068,4.068,0,0,1-.088,5.2L33,39.146v6.34h2.653V11H33Z" transform="translate(-10.894 -4.81)" fill="url(#linear-gradient)"/>
+    <path id="Path_2609" data-name="Path 2609" d="M30.537,31.665V11H27V32.779l.575-.407A4.062,4.062,0,0,1,30.537,31.665Z" transform="translate(-10.199 -4.81)" fill="url(#linear-gradient)"/>
+    <path id="Path_2610" data-name="Path 2610" d="M28.807,34.81a2.274,2.274,0,0,0-2.405.15L24.43,36.366l-1.769,1.264a.866.866,0,0,1-.787.124.884.884,0,0,1-.566-.557L19.54,31.892a.909.909,0,0,1,.212-.911l3.281-3.272V20.98L8,32.06v15.2l1.618,2.432a.855.855,0,0,1,.15.486v5.306H20.38V49.161a.9.9,0,0,1,.212-.575l2.679-3.095L28.55,39.4l.92-1.07a2.3,2.3,0,0,0,.062-2.936,2.193,2.193,0,0,0-.7-.566Z" transform="translate(-8 -5.965)" fill="url(#linear-gradient)"/>
+    <path id="Path_2611" data-name="Path 2611" d="M27.9,49.438h2.653v-4.3L27.17,49.048A.884.884,0,0,0,27.9,49.438Z" transform="translate(-10.219 -8.762)" fill="url(#linear-gradient)"/>
+    <path id="Path_2612" data-name="Path 2612" d="M24.785,36.406v-5L23.14,33.055l1.22,3.652Z" transform="translate(-9.752 -7.172)" fill="url(#linear-gradient)"/>
+    <path id="Path_2613" data-name="Path 2613" d="M38,45.486H51.264a.884.884,0,0,0,.884-.884V11H38Zm6.19-8.843a2.653,2.653,0,0,1,5.306,0v3.537a2.653,2.653,0,0,1-5.306,0Z" transform="translate(-11.472 -4.81)" fill="url(#linear-gradient)"/>
+    <path id="Path_2614" data-name="Path 2614" d="M22,4v8.843h2.653V9.306a.884.884,0,0,1,.884-.884H51.181a.884.884,0,0,1,.884.884v3.537h2.653V4Z" transform="translate(-9.62 -4)" fill="url(#linear-gradient)"/>
+    <path id="Path_2615" data-name="Path 2615" d="M47.884,44.306a.884.884,0,0,0,.884-.884V39.884a.884.884,0,1,0-1.769,0v3.537A.884.884,0,0,0,47.884,44.306Z" transform="translate(-12.514 -8.051)" fill="url(#linear-gradient)"/>
+  </g>
+</svg>

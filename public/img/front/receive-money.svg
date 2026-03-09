@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="46.494" height="38.447" viewBox="0 0 46.494 38.447">
+  <defs>
+    <linearGradient id="linear-gradient" x1="0.5" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#ceac53"/>
+      <stop offset="0.531" stop-color="#f6ea98"/>
+      <stop offset="1" stop-color="#dec164"/>
+    </linearGradient>
+  </defs>
+  <g id="Group_1145" data-name="Group 1145" transform="translate(0 0)">
+    <g id="wallet_11_" data-name="wallet(11)" transform="translate(0 0)">
+      <g id="Group_1139" data-name="Group 1139" transform="translate(0 0)">
+        <g id="Group_1138" data-name="Group 1138">
+          <path id="Path_2606" data-name="Path 2606" d="M33.976,56.826H46.494V51.014a6.713,6.713,0,0,0-6.706-6.706H6.706A6.713,6.713,0,0,0,0,51.014V76.049a6.713,6.713,0,0,0,6.706,6.706H39.788a6.713,6.713,0,0,0,6.706-6.706V70.237H33.976a6.706,6.706,0,1,1,0-13.412Z" transform="translate(0 -44.308)" fill="url(#linear-gradient)"/>
+        </g>
+      </g>
+      <g id="Group_1141" data-name="Group 1141" transform="translate(29.953 15.2)">
+        <g id="Group_1140" data-name="Group 1140">
+          <path id="Path_2607" data-name="Path 2607" d="M333.87,211.692a4.024,4.024,0,1,0,0,8.047h12.517v-8.047H333.87Zm1.788,5.365H333.87a1.341,1.341,0,1,1,0-2.682h1.788a1.341,1.341,0,1,1,0,2.682Z" transform="translate(-329.846 -211.692)" fill="url(#linear-gradient)"/>
+        </g>
+      </g>
+    </g>
+    <g id="south-24px" transform="translate(5.399 10.006)">
+      <rect id="Rectangle_11" data-name="Rectangle 11" width="19" height="19" transform="translate(0.31 0.312)" fill="none"/>
+      <path id="Path_2600" data-name="Path 2600" d="M10.374,9.633,9.33,8.589l-3.4,3.394V0H4.446V11.982l-3.4-3.4L0,9.633l5.187,5.187Z" transform="translate(4.338 2.559)" fill="#fff"/>
+    </g>
+  </g>
+</svg>

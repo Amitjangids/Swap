@@ -1,0 +1,14 @@
+<PesigXml>
+  <Header>
+    <Direction>Incoming</Direction>
+    <MemberBusinessID>14007</MemberBusinessID>
+    <ProcessingDate>2024-06-04</ProcessingDate>
+    <FileSequenceNumber>3077</FileSequenceNumber>
+    <TotalAssociationsNumber>0</TotalAssociationsNumber>
+    <BodyType>Clear</BodyType>
+    <HashCode>None</HashCode>
+    <SystemStatus>SUCCESS</SystemStatus>
+    <SystemStatusDesc>SUCCESS</SystemStatusDesc>
+  </Header>
+  <Body/>
+</PesigXml>

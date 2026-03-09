@@ -1,0 +1,1 @@
+{{Form::select('area', $areaList,null, ['class' => 'form-control required','placeholder' => 'Select Area'])}}

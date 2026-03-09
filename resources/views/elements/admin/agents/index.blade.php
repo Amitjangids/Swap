@@ -1,0 +1,198 @@
+<?php use Illuminate\Contracts\Encryption\DecryptException;
+use Illuminate\Support\Facades\Crypt;
+?>
+{{ HTML::script('public/assets/js/facebox.js')}}
+{{ HTML::style('public/assets/css/facebox.css')}}
+@php
+use App\Http\Controllers\Admin\AdminsController;
+@endphp
+@php
+use App\Permission;
+@endphp
+<script type="text/javascript">
+    $(document).ready(function ($) {
+        $('.close_image').hide();
+        $('a[rel*=facebox]').facebox({
+            closeImage: '{!! HTTP_PATH !!}/public/img/close.png'
+        });
+
+        $('.dropdown-menu a').on('click', function (event) {
+            $(this).parent().parent().parent().toggleClass('open');
+        });
+    });
+</script>
+<div class="admin_loader" id="loaderID">{{HTML::image("public/img/website_load.svg", '')}}</div>
+@if(!$allrecords->isEmpty())
+<div class="panel-body marginzero">
+    <div class="ersu_message">@include('elements.admin.errorSuccessMessage')</div>
+    {{ Form::open(array('method' => 'post', 'id' => 'actionFrom')) }}
+    <input type="hidden" name="page" value="{{$page}}">
+    <section id="no-more-tables" class="lstng-section">
+        <div class="topn">
+            <div class="topn_left">Agent Users List</div>
+            <div class="topn_rightd ddpagingshorting paggng-txt" id="pagingLinks" align="right">
+                <div class="topn_righ">
+                    Showing {{$allrecords->count()}} of {{ $allrecords->total() }} record(s).
+                </div>
+                <div class="panel-heading" style="align-items:center;">
+                    {{$allrecords->appends(Request::except('_token'))->render()}}
+                </div>
+            </div>                
+        </div>
+        <div class="tbl-resp-listing">
+            <table class="table table-bordered table-striped table-condensed cf">
+                <thead class="cf ddpagingshorting">
+                    <tr>
+                        <th style="width:5%">#</th>
+                        <th class="sorting_paging">@sortablelink('name', 'Name')</th>
+                        <th class="sorting_paging">@sortablelink('email', 'Email Address')</th>
+                        <th class="sorting_paging">@sortablelink('phone', 'Phone')</th>
+                        <th class="sorting_paging">@sortablelink('wallet_balance', 'Wallet Balance')</th>
+                        <th class="sorting_paging">@sortablelink('company_code', 'Company Name')</th>
+                        <th class="sorting_paging">@sortablelink('company_code', 'Company Code')</th>
+                        <th class="sorting_paging">@sortablelink('is_verify', 'Status')</th>
+                        <th class="sorting_paging">@sortablelink('is_kyc_done', 'KYC Status')</th>
+                        <th class="sorting_paging">@sortablelink('created_at', 'Date')</th>
+                        <th class="action_dvv"> Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($allrecords as $allrecord)
+                    <tr>
+                        <th style="width:5%"><input type="checkbox" onclick="javascript:isAllSelect(this.form);" name="chkRecordId[]" value="{{$allrecord->id}}" /></th>
+                        <td data-title="Full Name">{{$allrecord->name}}</td>
+                        <td data-title="Email Address">{{$allrecord->email?$allrecord->email:'N/A'}}</td>
+                        <td data-title="Contact Number">{{$allrecord->phone}}</td>
+                        <td data-title="Wallet Balance">{{ CURR }}{{number_format((($allrecord->wallet_balance - floor($allrecord->wallet_balance)) > 0.5 ? ceil($allrecord->wallet_balance) : floor($allrecord->wallet_balance)), 0, '', ' ') ?? 0}}</td>
+                        <td data-title="Contact Number">{{ $allrecord->Company->company_name ?? '' }}</td>
+                        <td data-title="Contact Number">{{$allrecord->company_code}}</td>
+                        <td data-title="Status" id="verify_{{$allrecord->slug}}">
+                            @if($allrecord->is_verify == 1)
+                            Activated
+                            @else
+                            Deactivated
+                            @endif
+                        </td>
+                        <td data-title="KYC Status">{{ ucfirst($allrecord->kyc_status) }}
+                            <!-- @if($allrecord->is_kyc_done == 1)
+                            Approved
+                            @elseif($allrecord->is_kyc_done == 2)
+                            Declined
+                            @elseif($allrecord->is_kyc_done == 3)
+                            Not Submitted
+                            @else
+                            Pending
+                            @endif -->
+                        </td>
+                        <td data-title="Date">{{$allrecord->created_at->format('M d, Y h:i A')}}</td>
+                        <td data-title="Action">
+                            <div id="loderstatus{{$allrecord->id}}" class="right_action_lo">{{HTML::image("public/img/loading.gif", '')}}</div>
+
+
+                            <div class="btn-group">
+                                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                                    <i class="fa fa-list"></i>
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu pull-right">
+                                    <li class="right_acdc" id="status{{$allrecord->id}}">
+
+
+                                        @if($allrecord->is_verify == '1')
+                                        <a href="{{ URL::to( 'admin/agents/deactivate/'.$allrecord->slug)}}" title="Deactivate" class="deactivate"><i class="fa fa-check"></i>Deactivate</a>
+                                        @else
+                                        <a href="{{ URL::to( 'admin/agents/activate/'.$allrecord->slug)}}" title="Activate" class="activate"><i class="fa fa-ban"></i>Activate</a>
+                                        @endif
+                                    </li>
+                                    @php
+                                        $roles = AdminsController::getRoles(Session::get('admin_role'));   
+                                    @endphp
+                                
+                            
+                                    <?php $permissions = DB::table('permissions')->where('role_id',$roles)->pluck('permission_name')->toArray(); ?>
+
+                                    @if(in_array('edit-agents',$permissions))
+                                    <li><a href="{{ URL::to( 'admin/agents/edit-agents/'.$allrecord->slug)}}" title="Edit" class=""><i class="fa fa-pencil"></i>Edit Agent</a></li>
+                                    @endif
+                                    @if(in_array('payclient',$permissions))
+                                    <li><a href="{{ URL::to( 'admin/agents/payclient/'.$allrecord->slug)}}" title="Pay Agent" class=""><i class="fa fa-money"></i>Pay Agent</a></li>
+                                    @endif
+
+                                    @if(in_array('remove-agent',$permissions))   
+                                    <li><a href="{{ URL::to( 'admin/agents/remove-agent/'.$allrecord->slug)}}" title="Remove Agents" class=""><i class="fa fa-ban"></i>Remove Agent</a></li>
+                                    @endif
+                                    
+                                    <!-- <li><a href="{{ URL::to( 'admin/agents/delete/'.$allrecord->slug)}}" title="Delete" class="" onclick="return confirm('Are you sure you want to delete this record?')"><i class="fa fa-trash-o"></i>Delete</a></li> -->
+                                    <li><a href="#info{!! $allrecord->id !!}" title="View Agent Detail" class="" rel='facebox'><i class="fa fa-eye"></i>View Agent Detail</a></li>
+                                    <!-- <li><a href="{{ URL::to( 'admin/sub-agents/'.$allrecord->slug)}}" title="View KYC Details" class=""><i class="fa fa-file"></i>Sub Agent Details</a></li> -->
+                                   
+                                    @if(in_array('kycdetail',$permissions))
+                                    <li><a href="{{ URL::to( 'admin/agents/kycdetail/'.$allrecord->slug)}}" title="View KYC Details" class=""><i class="fa fa-file"></i>View KYC Details</a></li>
+                                    <!-- <li><a href="{{ URL::to( 'admin/offers/agentoffers/'.$allrecord->slug)}}" title="View Card Offers" class=""><i class="fa fa-gift"></i>View Card Offers</a></li> -->
+                                    <!-- <li><a href="{{ URL::to( 'admin/transactionfees/transactionfee/'.$allrecord->slug)}}" title="Manage Transaction Fees" class=""><i class="fa fa-file-text"></i>Transaction Fees</a></li> -->
+                                    @endif
+                                    @if(in_array('transactionHistory',$permissions))
+                                    <li><a href="{{ URL::to( 'admin/transactions/transactionHistory/'.$allrecord->slug)}}" title="Manage Transaction History" class=""><i class="fa fa-money"></i>Transaction History</a></li>
+                                    @endif
+                                    <!-- <li><a href="{{ URL::to( 'admin/users/homeFeatures/'.$allrecord->slug)}}" title="Manage Home Features" class=""><i class="fa fa-home"></i>Manage Home Features</a></li> -->
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+            <div class="search_frm">
+                <button type="button" name="chkRecordId" onclick="checkAll(true);"  class="btn btn-info">Select All</button>
+                <button type="button" name="chkRecordId" onclick="checkAll(false);" class="btn btn-info">Unselect All</button>
+                <?php
+                $accountStatus = array(
+                    'Activate' => "Activate Agent",
+                    'Deactivate' => "Deactivate Agent",
+                    // 'Delete' => "Delete",
+                );
+                ;
+                ?>
+                <div class="list_sel">{{Form::select('action', $accountStatus,null, ['class' => 'small form-control','placeholder' => 'Action for selected record', 'id' => 'action'])}}</div>
+                <button type="submit" class="small btn btn-success btn-cons btn-info" onclick="return ajaxActionFunction();" id="submit_action">OK</button>
+            </div>    
+        </div>
+    </section>
+    {{ Form::close()}}
+</div>         
+</div> 
+@else 
+<div id="listingJS" style="display: none;" class="alert alert-success alert-block fade in"></div>
+<div class="admin_no_record">No record found.</div>
+@endif
+
+@if(!$allrecords->isEmpty())
+@foreach($allrecords as $allrecord)
+<div id="info{!! $allrecord->id !!}" style="display: none;">
+    <div class="nzwh-wrapper">
+        <fieldset class="nzwh">
+            <legend class="head_pop">Agent Details</legend>
+            <div class="drt">
+                <div class="admin_pop"><span>User Type: </span>  <label>@isset($allrecord->user_type) {{$allrecord->user_type}} @endisset</label></div>
+                <div class="admin_pop"><span>Full Name: </span>  <label>{!! $allrecord->name !!}</label></div>
+                <div class="admin_pop"><span>Wallet Balance: </span>  <label>{!! CURR.' '.number_format((($allrecord->wallet_balance - floor($allrecord->wallet_balance)) > 0.5 ? ceil($allrecord->wallet_balance) : floor($allrecord->wallet_balance)), 0, '', ' ') ?? 0 !!}</label></div>
+                <div class="admin_pop"><span>Email Address: </span>  <label>{{$allrecord->email?$allrecord->email:'N/A'}}</label></div>
+                <div class="admin_pop"><span>Phone Number: </span>  <label>{!! $allrecord->phone !!}</label></div>
+                <div class="admin_pop"><span>Date Of Birth: </span>  <label>{!! $allrecord->dob !!}</label></div>
+                <!-- <div class="admin_pop"><span>City: </span>  <label>{!! $allrecord->City?$allrecord->City->name_en:'N/A' !!}</label></div>
+                <div class="admin_pop"><span>Area: </span>  <label>{{$allrecord->Area?$allrecord->Area->name:'N/A'}}</label></div> -->
+                <!--<div class="admin_pop"><span>Business registration number: </span>  <label><?php //echo $allrecord->national_identity_number?Crypt::decryptString($allrecord->national_identity_number):'';?></label></div>-->
+
+                @if($allrecord->profile_image != '')
+                <div class="admin_pop"><span>Profile Picture</span> <label>{{HTML::image(PROFILE_FULL_DISPLAY_PATH.$allrecord->profile_image, SITE_TITLE,['style'=>"max-width: 200px"])}}</label></div>
+                @endif
+
+<!--                @if($allrecord->identity_image != '')
+                <div class="admin_pop"><span>Picture national identity</span> <label>{{HTML::image(IDENTITY_FULL_DISPLAY_PATH.$allrecord->identity_image, SITE_TITLE,['style'=>"max-width: 200px"])}}</label></div>
+                @endif-->
+
+        </fieldset>
+    </div>
+</div>
+@endforeach
+@endif
