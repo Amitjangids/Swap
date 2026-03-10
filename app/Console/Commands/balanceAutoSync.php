@@ -3,114 +3,105 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Carbon\Carbon;
 use App\Models\User;
+use App\Models\Transaction;
 use App\Models\UserCard;
 use App\Services\CardService;
 
-class BalanceAutoSync extends Command
+class balanceAutoSync extends Command
 {
+    /**
+     * The name and signature of the console command.
+     *
+     * @var string
+     */
     protected $signature = 'command:balanceAutoSync';
+
+    /**
+     * The console command description.
+     *
+     * @var string
+     */
     protected $description = 'Auto balance sync.';
 
-    protected $cardService;
+    protected $programId;
+    protected $auth;
+    protected $headers;
 
+    /**
+     * Constructor
+     */
     public function __construct(CardService $cardService)
     {
         parent::__construct();
         $this->cardService = $cardService;
     }
-
     public function handle()
     {
         try {
 
-            $userCards = UserCard::where('cardType', 'PHYSICAL')->get();
+            $userCard = UserCard::where('cardType', 'PHYSICAL')->get();
 
-            if ($userCards->isEmpty()) {
+            if ($userCard->isEmpty()) {
                 Log::info('No physical cards found');
-                return;
             }
 
-            foreach ($userCards as $card) {
-                $this->processCard($card);
-            }
+            foreach ($userCard as $trans) {
 
+                $userDetail = User::where('id', $trans->userId)->first();
+                $activeCard = UserCard::where('userId', $userDetail->id)->where('cardType', 'PHYSICAL')->where('cardStatus', 'Active')->first();
+
+
+                $userDetail = User::find($trans->userId);
+                if (!$userDetail) {
+                    Log::info('User not found', ['userId' => $trans->userId]);
+                    continue;
+                }
+
+                if (!$activeCard) {
+                    /* Log::info([
+                        'Skipped balance sync - Card not active',
+                        'userId' => $trans->userId,
+                        'accountId' => $trans->accountId
+                    ]); */
+                    continue;
+                }
+
+                $getCardBalance = $this->cardService->getCardBalance($trans->accountId, 'PHYSICAL');
+                $wallet = $userDetail->wallet_balance ?? 0;
+                $card = $getCardBalance['data']['balance'] ?? 0;
+
+                $amount = 0;
+
+                if ($card > $wallet) {
+                    $transferType = 'CardToWallet';
+                    $amount = $card - $wallet;
+                } elseif ($wallet > $card) {
+                    $transferType = 'WalletToCard';
+                    $amount = $wallet - $card;
+                } else {
+                    $transferType = "";
+                    continue;
+                }
+                if ($amount > 0) {
+                    if ($transferType === "CardToWallet") {
+                        Log::info(['Account Id' => $trans->accountId,'wallet' => $wallet,'card' => $card,'transferType'=>'CardToWallet']);
+                        User::where('id', $trans->userId)->increment('wallet_balance', $amount);
+                        Log::info(['Wallet Balance Added ' => $amount, 'userId' => $trans->userId]);
+                    } else {
+                        Log::info(['Account Id' => $trans->accountId,'wallet' => $wallet,'card' => $card,'transferType'=>'WalletToCard']);
+                        User::where('id', $trans->userId)->decrement('wallet_balance', $amount);
+                        Log::info(['Wallet Balance Deduct' => $amount, 'userId' => $trans->userId]);
+                    }
+                }
+            }
         } catch (\Throwable $th) {
-
-            Log::error('Wallet Balance Sync Failed', [
-                'message' => $th->getMessage(),
+            Log::info('Wallet Balance Sync Failed: ' . $th->getMessage(), [
                 'trace' => $th->getTraceAsString()
             ]);
         }
-    }
-
-    private function processCard($card)
-    {
-        $user = User::find($card->userId);
-
-        if (!$user) {
-            Log::info('User not found', ['userId' => $card->userId]);
-            return;
-        }
-
-        $activeCard = UserCard::where('userId', $user->id)
-            ->where('cardType', 'PHYSICAL')
-            ->where('cardStatus', 'Active')
-            ->first();
-
-        if (!$activeCard) {
-            return;
-        }
-
-        $cardBalanceResponse = $this->cardService->getCardBalance($card->accountId, 'PHYSICAL');
-
-        $wallet = $user->wallet_balance ?? 0;
-        $cardBalance = $cardBalanceResponse['data']['balance'] ?? 0;
-
-        $this->syncBalance($user, $card, $wallet, $cardBalance);
-    }
-
-    private function syncBalance($user, $card, $wallet, $cardBalance)
-    {
-        if ($cardBalance == $wallet) {
-            return;
-        }
-
-        if ($cardBalance > $wallet) {
-            $amount = $cardBalance - $wallet;
-
-            Log::info([
-                'Account Id' => $card->accountId,
-                'wallet' => $wallet,
-                'card' => $cardBalance,
-                'transferType' => 'CardToWallet'
-            ]);
-
-            User::where('id', $user->id)->increment('wallet_balance', $amount);
-
-            Log::info([
-                'Wallet Balance Added' => $amount,
-                'userId' => $user->id
-            ]);
-
-            return;
-        }
-
-        $amount = $wallet - $cardBalance;
-
-        Log::info([
-            'Account Id' => $card->accountId,
-            'wallet' => $wallet,
-            'card' => $cardBalance,
-            'transferType' => 'WalletToCard'
-        ]);
-
-        User::where('id', $user->id)->decrement('wallet_balance', $amount);
-
-        Log::info([
-            'Wallet Balance Deduct' => $amount,
-            'userId' => $user->id
-        ]);
     }
 }

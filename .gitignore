@@ -9,3 +9,4 @@ env/
 composer.json
 composer.lock
 vendor
+config/constant.php

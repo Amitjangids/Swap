@@ -75,10 +75,21 @@ class updateBdaTransactionStatus extends Command
                 /* Production Start */
                 $response = $client->get(env('BDA_URL') . $remittanceData->referenceLot, [
                     'headers' => [
-                        'x-api-key' =>env('XAPIKEY'),
+                        'x-api-key' => env('XAPIKEY'),
                         'x-client-id' => env('XCLIENTID'),
                     ],
-                ]); 
+                ]);
+
+                /* Production End*/
+
+                /* Sandbox Start */
+                /* $response = $client->get(env('BDA_URL_SANDBOX') . $remittanceData->referenceLot, [
+                    'headers' => [
+                        'x-api-key' => env('XAPIKEY_SANDBOX'),
+                        'x-client-id' => env('XCLIENTID_SANDBOX'),
+                    ],
+                ]); */
+                /* Sendbox End */
                 $responseBody = json_decode($response->getBody(), true);
                 if (isset($responseBody['statut']) && $responseBody['statut'] == 'TRAITE') {
                     $senderUser = User::where('id', $transaction->user_id)->first();

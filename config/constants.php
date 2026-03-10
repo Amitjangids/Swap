@@ -6,16 +6,16 @@ define('HTTP_PATH', 'https://internal.swap-africa.net');
 define('PUBLIC_PATH', 'https://internal.swap-africa.net/public');
 define("BASE_PATH", $_SERVER['DOCUMENT_ROOT']);
 
-define('MAIL_FROM', '');
+define('MAIL_FROM', 'admin@mosaic.com');
 
-define('CAPTCHA_KEY', '');
+define('CAPTCHA_KEY', '6Lf9v9MrAAAAADfksALw1cqGShkBjFzk-3Vo-auO');
 
-define('OTP_API_KEY', '');
-define('SMS_URL', '');
-define('SMS_FROM_SENDER_NO', '');
+define('OTP_API_KEY', '5fc892aa1f9221269802cf04557e5017-592830af-ea8e-4d82-9f06-ee7bda39795d');
+define('SMS_URL', 'https://v3ed3m.api.infobip.com/2fa/2');
+define('SMS_FROM_SENDER_NO', '447491163443');
 
-define('UNIMTX_SMS_ACCESS_KEY', '');
-define('UNIMTX_SMS_SECRET_KEY', '');
+define('UNIMTX_SMS_ACCESS_KEY', 'HtYXLtViNGrMJ88UP3vW3H');
+define('UNIMTX_SMS_SECRET_KEY', 'Vxs1SMFyd2BqJsAaHL4M7W2X1bDrAV');
 
 define('IMAGE_EXT', 'image/gif, image/jpeg, image/png');
 define('DOC_EXT', '.pdf,.doc,.docx');
@@ -30,10 +30,10 @@ define('LOGO_PATH1', LOGO_IMAGE_DISPLAY_PATH1);
 define('FAVICON_PATH', PUBLIC_PATH . '/img/favicon.ico.png');
 
 define('CURR','XAF ');
-define('SECRET_KEY','');
+define('SECRET_KEY','GyWDT@cuPVn0Zb3]+t,Kd&NL]N|vz1BlVssQKxzAHFAUNZbqvwS+yKwSa|PTC^xQW+SBL8AkBEM9y6ZJDFSk66UDK278Pkl1CGCxHY0fidRZE42Zc7H8u');
 
-define('API_BASIC_USER', '');
-define('API_BASIC_PASS', '');
+define('API_BASIC_USER', 'SWAP5G1RYLD');
+define('API_BASIC_PASS', '8FwHxg03BuouRpwL');
 
 /*****Twellio Details*****/
 global $sms_from;
@@ -41,35 +41,66 @@ $sms_from='00000000';
 define('Account_SID', '');
 define('Auth_Token', '');
 
+/* Old SMILE */
+/* define('SMILE_PATH', 'https://testapi.smileidentity.com/v1');
+define('SMILE_API_KEY', '7ee75f23-e0ff-4be3-bc91-d020951578af');
+define('SMILE_PARTNER_ID', '6448'); */
 
-define('SMILE_PATH', '');
-define('SMILE_PATH_COMPARE', '');
-define('SMILE_API_KEY', '');
-define('SMILE_PARTNER_ID', '');
+/* New SMILE */
+/* define('SMILE_PATH', 'https://testapi.smileidentity.com/v1');
+define('SMILE_API_KEY', 'a94fc32a-40b2-445a-b1a7-8858b01cc5e8');
+define('SMILE_PARTNER_ID', '7378'); */
 
+define('SMILE_PATH', 'https://api.smileidentity.com/v1');
+define('SMILE_PATH_COMPARE', 'https://api.smileidentity.com/v2');
+define('SMILE_API_KEY', '6bae1480-debf-4738-9c56-ebc0b391cdd6');
+define('SMILE_PARTNER_ID', '7378');
+
+/* define('SMILE_PATH', 'https://testapi.smileidentity.com/v1');
+define('SMILE_API_KEY', 'a94fc32a-40b2-445a-b1a7-8858b01cc5e8');
+define('SMILE_PARTNER_ID', '7378'); */
+
+
+// define('ONAFRIQ_PROGRAMID', '376');
+// define('ONAFRIQ_PROGRAMID_PHY', '375');
+// define('ONAFRIQ_SUBCOMPANY', '12741481');
+// define('ONAFRIQ_SUBCOMPANY_PHY', '12741480');
+// define('ONAFRIQ_CARD_URL', 'https://cards-sbx.onafriqservices.com/rest');
+// define('ONAFRIQ_AUTH', 'Basic YjQ4OTFkYmItMmUxYy00YTdmLWIzZTQtYmY4NjI5NTQ5Yzk3OkIpcWclak1hUSZuVGFlOWV2KlE/');
 
 define('VIRTUAL_CARD_FEES', '5000');
 define('CARD_FEES', '6000');
 define('PHYSICAL_CARD_FEES', '4000');
 define('REPLACE_CARD_FEES', '10000');
-
+/*************Sandbox Onafriq Details */
+/* define('ONAFRIQ_PROGRAMID', '376');
+define('ONAFRIQ_PROGRAMID_PHY', '375');
+define('ONAFRIQ_SUBCOMPANY', '12741481');
+define('ONAFRIQ_INFO_PROGRAMID', 'tok_sandbox_pW8ckznkbUvB1ZVfaURRso');
+define('ONAFRIQ_VAULTID', 'tnto06ue3ir');
+define('ONAFRIQ_SUBCOMPANY_PHY', '12741480');
+define('ONAFRIQ_CARD_URL', 'https://cards-sbx.onafriqservices.com/rest');
+define('ONAFRIQ_AUTH', 'Basic YjQ4OTFkYmItMmUxYy00YTdmLWIzZTQtYmY4NjI5NTQ5Yzk3OkIpcWclak1hUSZuVGFlOWV2KlE/'); */
 
 /*************Production Onafriq Details */
-define('ONAFRIQ_PROGRAMID', '');
-define('ONAFRIQ_PROGRAMID_PHY', '');
-define('ONAFRIQ_SUBCOMPANY', '');
-define('ONAFRIQ_SUBCOMPANY_PHY', '');
-define('ONAFRIQ_INFO_PROGRAMID', '');
-define('ONAFRIQ_VAULTID', '');
-define('ONAFRIQ_CARD_URL', '');
-define('ONAFRIQ_AUTH', '');
+define('ONAFRIQ_PROGRAMID', '293');
+define('ONAFRIQ_PROGRAMID_PHY', '293');
+define('ONAFRIQ_SUBCOMPANY', '24345847');
+define('ONAFRIQ_SUBCOMPANY_PHY', '24345834');
+define('ONAFRIQ_INFO_PROGRAMID', 'tok_live_aCrB64MVsbeuXaSz5iwgpf');
+define('ONAFRIQ_VAULTID', 'tntqimwtvub');
+define('ONAFRIQ_CARD_URL', 'https://cards.onafriqservices.com/rest');
+define('ONAFRIQ_AUTH', 'Basic MTFlYTY0YmItNWI2Yi00YWQwLWI3YmYtMjEwZWM2MTAyNGIxOm5WXih4JENaQ3JreDNBP1Mvb2hv');
 
 
+/* define('CORPORATECODE', 'SWAPOUTBOUND');
+define('CORPORATEPASS', 'u*PfjRq@:sq636CmHCFrxkR$W');
+define('APIURL', 'https://onafriqtest.com/mttest/services/XPService.XPServiceHttpSoap11Endpoint/'); */
 
-define('CORPORATECODE', '');
-define('CORPORATEPASS', '');
-
-define('APIURL', '');
+define('CORPORATECODE', 'SWAPGABON');
+define('CORPORATEPASS', 'Ne9YoDusFSGwf*dAlfK_');
+//define('APIURL', 'https://mfsafricapayments.com/mfs_mt_api/services/XPService.XPServiceHttpSoap11Endpoint/');
+define('APIURL', 'https://onafriqpayments.com/mfs_mt_api/services/XPService.XPServiceHttpSoap11Endpoint/');
 
 /* ******* profile image path ****** */
 define('WALK_FULL_UPLOAD_PATH', 'public/uploads/walks/');

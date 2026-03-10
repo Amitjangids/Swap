@@ -2322,83 +2322,112 @@ class AuthController extends Controller
 
     public function getCardNew()
     {
-        $userId = Auth::id();
-        $user = User::findOrFail($userId);
+        $startTime = microtime(true);
 
-        $cards = UserCard::where('userId', $userId)->get();
+        $user = Auth::user();
+
+        $cards = UserCard::where('userId', $user->id)->get();
+
+        if ($cards->isEmpty()) {
+            return response()->json(
+                $this->encryptContent(json_encode([
+                    'status' => 'Success',
+                    'reason' => __('message_app.Fetched record successfully'),
+                    'data' => []
+                ])),
+                200
+            );
+        }
 
         $responseCards = [];
 
         foreach ($cards as $card) {
 
+            $balance = 0;
+            $currencyCode = "";
             $isLocked = false;
             $isActive = false;
-            $balance = 0.00;
-            $currencyCode = "";
+            $isValidKyc = false;
+            $kycMsg = "";
 
-            // Call external service
+            /* -----------------------------
+            Third Party APIs
+            ------------------------------*/
+
+            $customerStart = microtime(true);
             $customerDetail = $this->cardService->getCustomerData($card->accountId, $card->cardType);
-            $cardBalance = $this->cardService->getCardBalance($card->accountId, $card->cardType);
+            Log::info('Customer API Time: ' . ((microtime(true) - $customerStart) * 1000) . ' ms');
 
-            // Log::info(["cardBalance" => $customerDetail, '$card->accountId' => $card->accountId]);
+            $balanceStart = microtime(true);
+            $cardBalance = $this->cardService->getCardBalance($card->accountId, $card->cardType);
+            Log::info('Balance API Time: ' . ((microtime(true) - $balanceStart) * 1000) . ' ms');
+
+            /* -----------------------------
+            Balance
+            ------------------------------*/
 
             if (!empty($cardBalance['data'])) {
-                $balance = $cardBalance['data']['balance'] ?? 0.00;
+                $balance = $cardBalance['data']['balance'] ?? 0;
                 $currencyCode = $cardBalance['data']['currencyCode'] ?? "";
             }
 
-            if (!empty($customerDetail['data'])) {
-                $status = $customerDetail['data']['cardStatus'] ?? "";
-                $isLocked = ($status === 'AC' || $status === 'RP') ? true : false;
-                $isActive = ($status === 'AC' || $status === 'RP') ? true : false;
+            /* -----------------------------
+            Card Status
+            ------------------------------*/
 
+            if (!empty($customerDetail['data'])) {
+
+                $status = $customerDetail['data']['cardStatus'] ?? '';
+
+                if (in_array($status, ['AC', 'RP'])) {
+                    $isLocked = true;
+                    $isActive = true;
+                }
             }
 
-            // KYC / Balance check
+            /* -----------------------------
+            KYC / Fees Check
+            ------------------------------*/
 
             if ($card->cardType == "VIRTUAL") {
+
                 if ($user->wallet_balance >= VIRTUAL_CARD_FEES) {
+
                     $isValidKyc = true;
-                    $kycMsg = "";
+
                 } else {
 
-                    if ($card->cardType == "VIRTUAL" && $isActive == "Active") {
-                        $isValidKyc = false;
-                        $kycMsg = __('message_app.CardFees', ['amount' => REPLACE_CARD_FEES]);
-                    } else {
-                        $isValidKyc = false;
-                        $kycMsg = __('message_app.CardFees', ['amount' => VIRTUAL_CARD_FEES]);
-                    }
+                    $isValidKyc = false;
+
+                    $kycMsg = __('message_app.CardFees', [
+                        'amount' => $isActive ? REPLACE_CARD_FEES : VIRTUAL_CARD_FEES
+                    ]);
                 }
             }
-            /* if ($card->cardType == "PHYSICAL") {
-                if ($user->wallet_balance >= CARD_FEES) {
-                    $isValidKyc = true;
-                    $kycMsg = "";
-                } else {
-                    $isValidKyc = false;
-                    $kycMsg = "You don't have XAF " . CARD_FEES . " in your account, so you can't view the card. Please add XAF " . CARD_FEES . " to your wallet first.";
-                }
-            } */
+
+            /* -----------------------------
+            Response
+            ------------------------------*/
 
             $responseCards[] = [
                 'accountId' => $card->accountId,
                 'last4Digits' => $card->last4Digits,
                 'cardType' => $card->cardType,
-                'name' => "{$user->name} {$user->lastName}",
+                'name' => $user->name . ' ' . $user->lastName,
                 'programId' => ONAFRIQ_INFO_PROGRAMID,
                 'vaultId' => ONAFRIQ_VAULTID,
                 'isLocked' => $isLocked,
                 'isActive' => $isActive,
                 'isValidKyc' => $isValidKyc,
                 'kycMsg' => $kycMsg,
-                // 'balance' => $this->numberFormatSpaces($this->roundAmount($balance)),
-                'balance' => number_format((($balance - floor($balance)) > 0.5 ? ceil($balance) : floor($balance)), 0, '', ' '),
+                'balance' => number_format(round($balance), 0, '', ' '),
                 'currencyCode' => $currencyCode,
                 'userId' => $user->unique_key,
-                'jobId' => $user->jobId,
+                'jobId' => $user->jobId
             ];
         }
+
+        Log::info('Total API Time: ' . ((microtime(true) - $startTime) * 1000) . ' ms');
 
         $statusArr = [
             'status' => 'Success',
@@ -7234,6 +7263,7 @@ class AuthController extends Controller
         $totalRecords = Transaction::where("payment_mode", 'send_money')
             ->whereIn("status", $status)
             ->where("receiver_id", $user_id)
+            ->where("status", "!=", 1)
             ->orderBy("id", "desc")
             ->count();
 
@@ -10769,11 +10799,20 @@ class AuthController extends Controller
                 ]
             ];
 
-            $response = $client->post(env('BDA_URL'), [
+
+            /* $response = $client->post('https://survey-apps.bda-net.ci/transfert/v2.0/lots', [
                 'json' => $data,
                 'headers' => [
-                    'x-api-key' => env('XAPIKEY'),
-                    'x-client-id' => env('XCLIENTID'),
+                    'x-api-key' => 'RZdJqzjrkVoapWaRCjGmIUDJLgQPSqXAAaJ8y3ne/dvGoSzzFdJz6T0R0cRazL4wSyExYteJEHu4Xh3DhCMoguG9rlBFfVI+yx8fWtYLdpYv/vO3IdqHeOco+jKI3CrZNmWPlwWZVfqkNZqEaXEfCRBC0L30mrn2mXcQMfveaHmWUN0OeaPbWWS2Cgd34+cj7Qay29jkKbihNiIAPunatQ==',
+                    'x-client-id' => '7766694c-3bb2-4f35-ab50-2b9a34d95ba6',
+                ],
+            ]); */
+
+            $response = $client->post('https://apps.bda-net.ci/transfert/v2.0/lots', [
+                'json' => $data,
+                'headers' => [
+                    'x-api-key' => 'RZdJqzjrkVoapWaRCjGmIRUFsjnp7OVE8xKFP1EX+aq/dhdza8qyOEBmN7GP+S2oWw7GRv17ZKizhZp0/C8cbE1rQCcHQg3Wk0JZVBH/bjrMCyhUcd0h1YM5sHE/6OFQv3Q9mv/rLz/vhercH8lLMuqoF73Wc7B2ECdvej5/W5Eg/CmEEeMjhXrTw2N/ZWd9JKzNNLXT7uh7HU24r9WuHmKBYlADzCCgzY3eT5IYeTaW5NF+d34kUIY6wttCOJvk',
+                    'x-client-id' => 'a1ccdfb1-400a-4d20-ac93-7bd148da0957',
                 ],
             ]);
 
@@ -15050,7 +15089,7 @@ class AuthController extends Controller
                 "transactionStatus" => __("message_app." . $this->getStatusText($records->status)),
                 "slug" => $this->getStatusText($records->status),
                 "note" => $records->notes ?? "",
-                "transactionStatusMessage" => "Transaction " . __("message_app." . $this->getStatusText($records->status)),
+                "transactionStatusMessage" => "Transaction " . ($records->status == 1 ? __("message_app.completeTrans") : __("message_app." . $this->getStatusText($records->status))) ,
             ];
             $transactionArray['transactionList'] = $transArr;
 
@@ -15730,11 +15769,11 @@ class AuthController extends Controller
                     ]
                 ];
 
-                $response = $client->post(env('BDA_URL') , [
+                $response = $client->post('https://apps.bda-net.ci/transfert/v2.0/lots', [
                     'json' => $data,
                     'headers' => [
-                        'x-api-key' => env('XAPIKEY'),
-                        'x-client-id' => env('XCLIENTID'),
+                        'x-api-key' => 'RZdJqzjrkVoapWaRCjGmIRUFsjnp7OVE8xKFP1EX+aq/dhdza8qyOEBmN7GP+S2oWw7GRv17ZKizhZp0/C8cbE1rQCcHQg3Wk0JZVBH/bjrMCyhUcd0h1YM5sHE/6OFQv3Q9mv/rLz/vhercH8lLMuqoF73Wc7B2ECdvej5/W5Eg/CmEEeMjhXrTw2N/ZWd9JKzNNLXT7uh7HU24r9WuHmKBYlADzCCgzY3eT5IYeTaW5NF+d34kUIY6wttCOJvk',
+                        'x-client-id' => 'a1ccdfb1-400a-4d20-ac93-7bd148da0957',
                     ],
                 ]);
                 Log::info('BDA Request:', ['request' => $data]);
@@ -16055,7 +16094,7 @@ class AuthController extends Controller
                         ->orWhere('u2.name', 'LIKE', "%{$search}%"); */
 
                     // $q->where('transactions.amount', $search);
-
+    
                     // Phone search – EXACT match
                     if (is_numeric($search)) {
                         $q->orWhere('u1.phone', $search)

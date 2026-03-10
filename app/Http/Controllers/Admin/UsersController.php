@@ -646,8 +646,8 @@ class UsersController extends Controller
                     ], 'deposit');
 
 
-
                     $title = __('message_app.fund_added_title');
+                    // dd($title);
                     $message = __('message_app.fund_added_des', ['amount' => $input['amount']]);
                     $device_token = $recordInfo->device_token;
                     $device_type = $recordInfo->device_type;

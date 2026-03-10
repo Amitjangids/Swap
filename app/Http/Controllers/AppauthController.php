@@ -6826,7 +6826,7 @@ class AppauthController extends Controller {
     public function updateAES(Request $request) {
 
         $encryption = new \MrShan0\CryptoLib\CryptoLib();
-        $secretyKey = env('AES_SECRET_KEY');
+        $secretyKey = 'BlVssQKxzAHFAUNZbqvwS+yKwSa';
 
 // $string     = 'Hi, This is a encripted and descripted test for PHP, Android and iOS';
 //         $cipher  = $encryption->encryptPlainTextWithRandomIV($string, $secretyKey);
