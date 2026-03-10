@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="33" height="33" viewBox="0 0 33 33">
+  <defs>
+    <linearGradient id="linear-gradient" x1="0.5" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#ceac53"/>
+      <stop offset="0.515" stop-color="#f6ea98"/>
+      <stop offset="1" stop-color="#ceac53"/>
+    </linearGradient>
+  </defs>
+  <g id="Group_1231" data-name="Group 1231" transform="translate(-0.403 0.066)">
+    <g id="Group_1207" data-name="Group 1207" transform="translate(0 0)">
+      <circle id="Ellipse_85" data-name="Ellipse 85" cx="16.5" cy="16.5" r="16.5" transform="translate(0.403 -0.066)"/>
+    </g>
+    <g id="google-forms" transform="translate(11.078 9.324)">
+      <path id="Path_2744" data-name="Path 2744" d="M331.431,11.987H334.2l-3.2-3.2v2.766A.432.432,0,0,0,331.431,11.987Z" transform="translate(-323.237 -8.536)" fill="url(#linear-gradient)"/>
+      <path id="Path_2745" data-name="Path 2745" d="M62.294,14.721H70.92a1.3,1.3,0,0,0,1.294-1.294V4.313H69.195A1.3,1.3,0,0,1,67.9,3.019V0H62.294A1.3,1.3,0,0,0,61,1.294V13.428A1.3,1.3,0,0,0,62.294,14.721Zm2.588-7.792h4.313a.431.431,0,0,1,0,.863H64.882a.431.431,0,0,1,0-.863Zm0,1.725h4.313a.431.431,0,0,1,0,.863H64.882a.431.431,0,0,1,0-.863Zm0,1.725h4.313a.431.431,0,0,1,0,.863H64.882a.431.431,0,0,1,0-.863Zm-1.725-3.45a.431.431,0,1,1-.431.431A.431.431,0,0,1,63.156,6.929Zm0,1.725a.431.431,0,1,1-.431.431A.431.431,0,0,1,63.156,8.655Zm0,1.725a.431.431,0,1,1-.431.431A.431.431,0,0,1,63.156,10.38Z" transform="translate(-61)" fill="url(#linear-gradient)"/>
+    </g>
+  </g>
+</svg>

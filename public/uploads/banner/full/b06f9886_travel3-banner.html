@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recharge Banner</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f5f7fa;
+            padding: 20px;
+        }
+        
+        .banner {
+            width: 100%;
+            max-width: 800px;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            position: relative;
+            color: white;
+        }
+        
+        .banner-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 25px 30px;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .logo {
+            font-weight: 700;
+            font-size: 24px;
+            letter-spacing: 1px;
+        }
+        
+        .download-btn {
+            background-color: #ff7e5f;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 126, 95, 0.3);
+        }
+        
+        .download-btn:hover {
+            background-color: #ff6b4a;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 126, 95, 0.4);
+        }
+        
+        .banner-content {
+            padding: 40px 30px;
+            text-align: center;
+        }
+        
+        .main-phrase {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            margin-bottom: 25px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .icon-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .travel-icon {
+            font-size: 50px;
+            margin: 0 15px;
+        }
+        
+        .footer {
+            padding: 20px 30px;
+            background-color: rgba(0, 0, 0, 0.1);
+            text-align: center;
+            font-weight: 600;
+            font-size: 16px;
+            letter-spacing: 0.5px;
+        }
+        
+        .travel-docs {
+            display: inline-block;
+            background-color: rgba(255, 255, 255, 0.15);
+            padding: 8px 20px;
+            border-radius: 30px;
+            margin-top: 5px;
+        }
+        
+        /* Decorative elements */
+        .corner-circle {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+        
+        .circle-1 {
+            top: -50px;
+            right: -50px;
+        }
+        
+        .circle-2 {
+            bottom: -40px;
+            left: -40px;
+            width: 100px;
+            height: 100px;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .banner-header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+            
+            .main-phrase {
+                font-size: 22px;
+            }
+            
+            .travel-icon {
+                font-size: 40px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .main-phrase {
+                font-size: 20px;
+            }
+            
+            .banner-content {
+                padding: 30px 20px;
+            }
+            
+            .travel-icon {
+                font-size: 35px;
+                margin: 0 10px;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="banner">
+        <div class="corner-circle circle-1"></div>
+        <div class="corner-circle circle-2"></div>
+        
+             
+        <div class="banner-content">
+            <h1 class="main-phrase">Déposez via Airtel, Swap Agence, Ecobank Express ou l'application Ecobank.</h1>
+            
+            
+        </div>
+        
+        <div class="footer">
+            <div>Rechargez votre portefeuille en toute simplicité</div>
+                    </div>
+    </div>
+
+  
+</body>
+</html>

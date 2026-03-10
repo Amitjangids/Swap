@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="174.898" height="42.45" viewBox="0 0 174.898 42.45">
+  <defs>
+    <linearGradient id="linear-gradient" y1="0.5" x2="1" y2="0.5" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#c99b3d"/>
+      <stop offset="0.515" stop-color="#fbe382"/>
+      <stop offset="1" stop-color="#c99b3d"/>
+    </linearGradient>
+  </defs>
+  <g id="Group_1293" data-name="Group 1293" transform="translate(-138 -37.634)">
+    <path id="Path_2791" data-name="Path 2791" d="M.7,0h1.43C6.446,0,9.2-1.848,10.692-5.962c.9-2.486,1.518-4.048,3.234-4.048h.022V-15.4H13.2c-3.63,0-5.544,1.606-6.952,5.148C4.62-6.16,3.608-5.412.7-5.412ZM12.188,0H28.512L20.35-16.06ZM40.48-15.4H26.994v5.412h4.18V0h5.5V-9.988H40.48ZM60.148-9.966c0-5.214-4.906-5.434-6.732-5.434h-5.5V0h5.5V-4.664C57.948-4.8,60.148-6.512,60.148-9.966ZM58.806,0H75.13L66.968-16.06ZM87.582-15.4H72.842L77.66-5.94V0h5.5V-6.71Z" transform="translate(225.316 66.853)" fill="#1a1818"/>
+    <g id="Group_1" data-name="Group 1" transform="translate(138 37.634)">
+      <path id="Path_1" data-name="Path 1" d="M107.067,89.117H67.477A5.719,5.719,0,0,1,61.7,82.108l3.364-19.079a8.725,8.725,0,0,1,8.244-7.009H112.9a5.72,5.72,0,0,1,5.773,7.009l-3.364,19.079A8.725,8.725,0,0,1,107.067,89.117Z" transform="translate(-49.841 -55.584)" fill="#1a1818"/>
+      <path id="Path_2" data-name="Path 2" d="M107.067,88.319H67.477A5.719,5.719,0,0,1,61.7,81.31l3.364-19.079a8.725,8.725,0,0,1,8.244-7.009H112.9a5.72,5.72,0,0,1,5.773,7.009L115.312,81.31A8.725,8.725,0,0,1,107.067,88.319Z" transform="translate(-49.841 -55.222)" fill="#1a1818"/>
+      <path id="Path_3" data-name="Path 3" d="M129.641,72.347a6.952,6.952,0,0,1-.1,1.511l-3.365,19.079a8.724,8.724,0,0,1-8.244,7.008H78.34a5.643,5.643,0,0,0,5.872,5.5H123.8a8.725,8.725,0,0,0,8.245-7.009l3.364-19.079A5.719,5.719,0,0,0,129.641,72.347Z" transform="translate(-57.44 -62.993)" fill="url(#linear-gradient)"/>
+      <rect id="Rectangle_1" data-name="Rectangle 1" width="62.626" height="8.956" transform="translate(6.319 8.029)" fill="#fff"/>
+      <rect id="Rectangle_2" data-name="Rectangle 2" width="59.17" height="0.584" transform="translate(9.483 7.445)" fill="#1a1818"/>
+      <rect id="Rectangle_3" data-name="Rectangle 3" width="66.816" height="0.584" transform="translate(0 16.988)" fill="#1a1818"/>
+      <rect id="Rectangle_4" data-name="Rectangle 4" width="44.916" height="0.584" transform="translate(0 18.347)" fill="#fff"/>
+    </g>
+  </g>
+</svg>

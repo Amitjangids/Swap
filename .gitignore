@@ -1,0 +1,11 @@
+# Logs
+logs
+*.log
+.env
+env
+\.env
+.env/
+env/
+composer.json
+composer.lock
+vendor

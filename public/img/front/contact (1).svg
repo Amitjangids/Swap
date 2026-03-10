@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20.646" height="25.533" viewBox="0 0 20.646 25.533">
+  <defs>
+    <linearGradient id="linear-gradient" x1="0.5" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#ceac53"/>
+      <stop offset="0.515" stop-color="#f6ea98"/>
+      <stop offset="1" stop-color="#ceac53"/>
+    </linearGradient>
+  </defs>
+  <g id="contact_1_" data-name="contact (1)" transform="translate(-49)">
+    <path id="Path_888" data-name="Path 888" d="M68.9,0H51.344A.748.748,0,0,0,50.6.748V4.039h-.848a.748.748,0,0,0,0,1.5H50.6V8.029h-.848a.748.748,0,0,0,0,1.5H50.6v2.493h-.848a.748.748,0,0,0,0,1.5H50.6v2.493h-.848a.748.748,0,0,0,0,1.5H50.6V20h-.848a.748.748,0,0,0,0,1.5H50.6v3.291a.748.748,0,0,0,.748.748H68.9a.748.748,0,0,0,.748-.748V.748A.748.748,0,0,0,68.9,0ZM64.11,18.7a.748.748,0,0,1-.748-.748c0-1.986-1.212-4.039-3.242-4.039s-3.242,2.054-3.242,4.039a.748.748,0,1,1-1.5,0,5.794,5.794,0,0,1,2.457-4.875,3.541,3.541,0,1,1,4.562,0,5.793,5.793,0,0,1,2.457,4.875A.748.748,0,0,1,64.11,18.7Z" fill="url(#linear-gradient)"/>
+    <circle id="Ellipse_78" data-name="Ellipse 78" cx="2" cy="2" r="2" transform="translate(58.323 8.767)" fill="url(#linear-gradient)"/>
+  </g>
+</svg>

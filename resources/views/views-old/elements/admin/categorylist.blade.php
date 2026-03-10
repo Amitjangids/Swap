@@ -1,0 +1,1 @@
+{{Form::select('category', $categoryType,null, ['class' => 'form-control required','placeholder' => 'Select Category Type'])}}

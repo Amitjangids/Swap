@@ -1,0 +1,245 @@
+@media screen and (max-width: 1920px) and (min-width: 1367px) {
+.banner-img {
+     position: absolute;
+    top: 9%;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    z-index: 0;
+    width: 43%;
+    opacity: 0.6;
+}
+}
+@media only screen and (max-width: 1280px){.pre-register-left-head h1{font-size: 50px;}}
+@media only screen and (max-width: 992px) {
+.home-card-block .col-sm-4 {
+    max-width: 50%;
+    flex: 0 0 100%;
+}
+.cat-box.col-sm-2{max-width: 25%; flex: 0 0 25%}
+.col-sm-6.slide_cls {
+    max-width: 100%;
+    flex: 0 0 100%;
+    margin-bottom: 30px;
+}
+.col-sm-6.p-left.tran_clss {
+    max-width: 100%;
+    flex: 0 0 100%;
+}
+    header .navbar-toggler {
+        position: absolute;
+        right: 0;
+        top: 17px;
+    }
+
+    header #navbarTogglerDemo01 {
+        background: #4b301b;
+        z-index: 99;
+        position: absolute;
+        max-width: 100%;
+        left: 0;
+        top: 74px;
+    }
+
+    .in-mob {
+        display: block;
+    }
+
+    .log-rt {
+        display: none;
+    }
+
+    .banner-home {
+        height: inherit;
+        padding: 113px 0 106px;
+    }
+
+    .banner-home h1 {
+        font-size: 30px;
+        line-height: 36px;
+    }
+
+    .border-btn span {
+        font-size: 10px;
+        padding: 8px 12px;
+    }
+
+    .border-btn::after {
+        height: calc(100% - 2rem);
+    }
+
+    .radio-data-banner ul li {
+        margin-bottom: 20px;
+    }
+
+    .radio-data-banner ul li h4 {
+        font-size: 14px;
+    }
+
+    .radio-data-banner ul li h4 span {
+        font-size: 14px;
+    }
+
+    .banner-video a {
+        width: 40px;
+        height: 40px;
+    }
+
+    .banner-video img {
+        width: 14px;
+    }
+
+    .reviewbox {
+        flex-direction: column;
+    }
+
+
+}
+@media only screen and (max-width: 768px) {
+    .option-thumb a{text-align: center;}
+    .pagination{flex-flow: row wrap;}
+    .head-left {
+    display: flex;
+flex-flow: row wrap;
+}
+    .setting-link{font-size: 14px;}
+    .page-heading h2
+{font-size: 32px;}
+    .page-heading h2 {
+    font-size: 34px;
+    font-weight: 500;
+    text-align: center;
+    line-height: 53px;
+}
+.head-left {
+    display: flex;
+    flex-flow: row wrap;
+}
+.pagination{flex-flow:row wrap ;}
+.shpagel {
+    margin-bottom: 15px;
+}
+.pin-box img {
+    width: 150px;
+}
+.history-box-main{flex-flow: row wrap;}
+    .desktop_set{display: none;}
+    .mobile_set{display: block;}
+ .SelectBox.ml-auto {
+    position: relative;
+    right: 21px;
+    top: 0;
+}
+
+    .pro-card {
+        margin-bottom: 20px;
+    }
+
+
+.p-left {
+    padding-left: 15px !important;
+    margin-top: 20px;
+}
+.home-card-block .col-sm-4 {
+    flex: 0 0 100%;
+    max-width: 100%;
+}
+.cat-box.col-sm-2 {
+    flex: 0 0 33.33%;
+    max-width: 33.33%;
+    overflow: hidden;
+}
+
+/*.mob-view .col-sm-6{max-width: 100%; flex: 0 0 100%}*/
+.main-option-thumb-box {
+    border: 1px solid #ECECEC;
+    padding: 25px;
+}
+.success img{width: 100%;}
+}
+@media only screen and (max-width: 600px) {
+  
+.cat-box.col-sm-2 {
+    flex: 0 0 50%;
+    max-width: 50%;
+}
+
+}
+
+
+@media only screen and (max-width: 768px) {
+     .form-box-pre-register .col-sm-6{flex: 0 0 100%; max-width: 100%;}
+     .bg-img-phone{width: 100%;left: 0}
+     .pre-register-form{padding-left: 0}
+    .spot-home::after {
+        background: #feca7a;
+        position: absolute;
+        content: "";
+        height: 91%;
+        width: 100%;
+        right: 0;
+        bottom: 0;
+        z-index: -1;
+        top: 154px;
+        left: 0;
+    }
+
+    .map-home-page h2 {
+        text-align: center;
+        position: relative;
+        width: 100%;
+        padding: 0 10px;
+        font-size: 18px;
+        top: 0
+    }
+
+    .reviewbox p {
+        margin-top: 15px;
+    }
+
+    .customer-review-content h3 {
+        left: 0
+    }
+
+    .main-heading h4 {
+        font-size: 43px;
+    }
+
+    .main-heading h4 {
+        font-size: 43px;
+    }
+
+    .blog-home-box {
+        margin: 20px 0 0;
+    }
+
+    .hire-home-box {
+        margin-bottom: 20px;
+    }
+
+    .lunch-para {
+        padding: 20px;
+        box-shadow: 0 0 53px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        margin: 32px 0 0 auto;
+        background: #fff;
+        z-index: 99;
+    }
+    .hire-home-box img {
+    margin-right: 10px;
+    width: 150px;
+}
+.banner-img {
+    position: absolute;
+    top: 20%;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    z-index: 0;
+    width: 69%;
+    opacity: 0.4;
+}
+.history-box-main.home-history.row{margin-left: 0}
+/*.history-box-main{flex-direction: column;}*/
+.pre-register-left-head h1{font-size: 53px;}
+}

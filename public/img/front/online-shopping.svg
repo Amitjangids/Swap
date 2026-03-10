@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="45.512" height="39.239" viewBox="0 0 45.512 39.239">
+  <defs>
+    <linearGradient id="linear-gradient" x1="0.5" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#ceac53"/>
+      <stop offset="0.531" stop-color="#f6ea98"/>
+      <stop offset="1" stop-color="#dec164"/>
+    </linearGradient>
+  </defs>
+  <g id="online-shopping" transform="translate(0 0)">
+    <path id="Path_2619" data-name="Path 2619" d="M152.757,413.609h-2.015v2.667h18.715v-2.667h-2.014l-.635-3.23H153.391Z" transform="translate(-137.342 -377.036)" fill="url(#linear-gradient)"/>
+    <path id="Path_2620" data-name="Path 2620" d="M120.5,162.319l.622-3.3h-7.3l.622,3.3Z" transform="translate(-103.704 -148.025)" fill="url(#linear-gradient)"/>
+    <path id="Path_2621" data-name="Path 2621" d="M0,344.375H45.512v3.2H0Z" transform="translate(0 -316.9)" fill="url(#linear-gradient)"/>
+    <path id="Path_2622" data-name="Path 2622" d="M45.512,35.285H0V60.094H45.512ZM12.243,56.573H9.576V53.906h2.667Zm5.713,0H15.289V53.906h2.667ZM6.669,42.386H5.127V39.719H8.88l.735,3.9H20.631L19,52.246H8.529ZM40.359,54.6h-13.6V51.932h13.6Zm0-5.334h-13.6V46.6h13.6Zm-13.6-5.334V41.265h13.6v2.667Z" transform="translate(0 -35.285)" fill="url(#linear-gradient)"/>
+  </g>
+</svg>
