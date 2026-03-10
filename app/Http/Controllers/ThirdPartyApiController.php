@@ -395,11 +395,11 @@ class ThirdPartyApiController extends Controller
             'verify' => $certificate,
         ]);
         try {
-            $response = $client->post('https://apps.bda-net.ci/transfert/v2.0/lots', [
+            $response = $client->post(env('BDA_URL'), [
                 'json' => $data,
                 'headers' => [
-                    'x-api-key' => 'RZdJqzjrkVoapWaRCjGmIRUFsjnp7OVE8xKFP1EX+aq/dhdza8qyOEBmN7GP+S2oWw7GRv17ZKizhZp0/C8cbE1rQCcHQg3Wk0JZVBH/bjrMCyhUcd0h1YM5sHE/6OFQv3Q9mv/rLz/vhercH8lLMuqoF73Wc7B2ECdvej5/W5Eg/CmEEeMjhXrTw2N/ZWd9JKzNNLXT7uh7HU24r9WuHmKBYlADzCCgzY3eT5IYeTaW5NF+d34kUIY6wttCOJvk',
-                    'x-client-id' => 'a1ccdfb1-400a-4d20-ac93-7bd148da0957',
+                    'x-api-key' => env('XAPIKEY'),
+                    'x-client-id' => env('XCLIENTID'),
                 ],
             ]);
 
@@ -431,7 +431,7 @@ class ThirdPartyApiController extends Controller
             'verify' => $certificate,
         ]);
         try {
-            $response = $client->post('https://survey-apps.bda-net.ci/transfert/v2.0/virements', [
+            /* $response = $client->post('https://survey-apps.bda-net.ci/transfert/v2.0/virements', [
                 'json' => $data,
                 'headers' => [
                     'x-api-key' => 'RZdJqzjrkVoapWaRCjGmIQkukdOL8e39JQrmW+gH9B+DIjnJbEh1AmUV26OLPAjblWS8jkjAo9j6pMHJOx/sMoPtkB32ha/brVKNJrT3++Qpu+qFa1T2mPVGqKgeGUOGM1QxU71Ts0xnsGpq7IQfX2IA3YGYnJhS8fD+Ggvf2N4KHz9qH6+/Yuj9lxtUNyEN1x57YFkogOjPLqvgdfVk3fbl4p5UgxZyEF+RUiPojpsgsMPfM3dewwd7ysgwlzLv',
@@ -439,7 +439,7 @@ class ThirdPartyApiController extends Controller
                 ],
             ]);
             $responseBody = json_decode($response->getBody(), true);
-            return $responseBody;
+            return $responseBody; */
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
         }
@@ -457,10 +457,10 @@ class ThirdPartyApiController extends Controller
             'verify' => $certificate,
         ]);
         try {
-            $response = $client->get('https://apps.bda-net.ci/transfert/v2.0/lots/SWAP8611', [
+            $response = $client->get(env('BDA_URL').'SWAP8611', [
                 'headers' => [
-                    'x-api-key' => 'RZdJqzjrkVoapWaRCjGmIRUFsjnp7OVE8xKFP1EX+aq/dhdza8qyOEBmN7GP+S2oWw7GRv17ZKizhZp0/C8cbE1rQCcHQg3Wk0JZVBH/bjrMCyhUcd0h1YM5sHE/6OFQv3Q9mv/rLz/vhercH8lLMuqoF73Wc7B2ECdvej5/W5Eg/CmEEeMjhXrTw2N/ZWd9JKzNNLXT7uh7HU24r9WuHmKBYlADzCCgzY3eT5IYeTaW5NF+d34kUIY6wttCOJvk',
-                    'x-client-id' => 'a1ccdfb1-400a-4d20-ac93-7bd148da0957',
+                    'x-api-key' => env('XAPIKEY'),
+                    'x-client-id' => env('XCLIENTID'),
                 ],
             ]);
             $responseBody = json_decode($response->getBody(), true);

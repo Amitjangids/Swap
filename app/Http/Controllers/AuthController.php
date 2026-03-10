@@ -10769,20 +10769,11 @@ class AuthController extends Controller
                 ]
             ];
 
-
-            /* $response = $client->post('https://survey-apps.bda-net.ci/transfert/v2.0/lots', [
+            $response = $client->post(env('BDA_URL'), [
                 'json' => $data,
                 'headers' => [
-                    'x-api-key' => 'RZdJqzjrkVoapWaRCjGmIUDJLgQPSqXAAaJ8y3ne/dvGoSzzFdJz6T0R0cRazL4wSyExYteJEHu4Xh3DhCMoguG9rlBFfVI+yx8fWtYLdpYv/vO3IdqHeOco+jKI3CrZNmWPlwWZVfqkNZqEaXEfCRBC0L30mrn2mXcQMfveaHmWUN0OeaPbWWS2Cgd34+cj7Qay29jkKbihNiIAPunatQ==',
-                    'x-client-id' => '7766694c-3bb2-4f35-ab50-2b9a34d95ba6',
-                ],
-            ]); */
-
-            $response = $client->post('https://apps.bda-net.ci/transfert/v2.0/lots', [
-                'json' => $data,
-                'headers' => [
-                    'x-api-key' => 'RZdJqzjrkVoapWaRCjGmIRUFsjnp7OVE8xKFP1EX+aq/dhdza8qyOEBmN7GP+S2oWw7GRv17ZKizhZp0/C8cbE1rQCcHQg3Wk0JZVBH/bjrMCyhUcd0h1YM5sHE/6OFQv3Q9mv/rLz/vhercH8lLMuqoF73Wc7B2ECdvej5/W5Eg/CmEEeMjhXrTw2N/ZWd9JKzNNLXT7uh7HU24r9WuHmKBYlADzCCgzY3eT5IYeTaW5NF+d34kUIY6wttCOJvk',
-                    'x-client-id' => 'a1ccdfb1-400a-4d20-ac93-7bd148da0957',
+                    'x-api-key' => env('XAPIKEY'),
+                    'x-client-id' => env('XCLIENTID'),
                 ],
             ]);
 
