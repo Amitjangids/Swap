@@ -42,7 +42,7 @@ class GimacReportExport implements FromCollection, WithHeadings, WithEvents
 
             if ($record->is_verified_by_gimac == '0')
                 $status = 'Not Verified';
-            if ($record->is_verified_by_gimac == '1')
+            elseif ($record->is_verified_by_gimac == '1')
                 $status = 'Verified';
             
             $result[] = array(

@@ -74,6 +74,8 @@ class OnafriqReportExport implements FromCollection, WithHeadings, WithEvents
                 case 'TG':
                     $recipientCountry = 'Togo';
                     break;
+                default:
+                    $recipientCountry = '-';
             }
             $result[] = array(
                 'id' => $i,
