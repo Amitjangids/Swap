@@ -73,10 +73,10 @@ class updateBdaTransactionStatus extends Command
                 // Log::channel('gimacLogs')->info("Server Error :", ['Lot' => $remittanceData->referenceLot, 'Excel' => $transaction->excel_trans_id, 'entryType' => $transaction->entryType, 'transaction_id' => $transaction->id]);
 
                 /* Production Start */
-                $response = $client->get('https://apps.bda-net.ci/transfert/v2.0/lots/' . $remittanceData->referenceLot, [
+                $response = $client->get(env('BDA_URL') . $remittanceData->referenceLot, [
                     'headers' => [
-                        'x-api-key' => 'RZdJqzjrkVoapWaRCjGmIRUFsjnp7OVE8xKFP1EX+aq/dhdza8qyOEBmN7GP+S2oWw7GRv17ZKizhZp0/C8cbE1rQCcHQg3Wk0JZVBH/bjrMCyhUcd0h1YM5sHE/6OFQv3Q9mv/rLz/vhercH8lLMuqoF73Wc7B2ECdvej5/W5Eg/CmEEeMjhXrTw2N/ZWd9JKzNNLXT7uh7HU24r9WuHmKBYlADzCCgzY3eT5IYeTaW5NF+d34kUIY6wttCOJvk',
-                        'x-client-id' => 'a1ccdfb1-400a-4d20-ac93-7bd148da0957',
+                        'x-api-key' =>env('XAPIKEY'),
+                        'x-client-id' => env('XCLIENTID'),
                     ],
                 ]);
 
