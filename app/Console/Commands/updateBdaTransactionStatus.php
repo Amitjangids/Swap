@@ -78,18 +78,7 @@ class updateBdaTransactionStatus extends Command
                         'x-api-key' =>env('XAPIKEY'),
                         'x-client-id' => env('XCLIENTID'),
                     ],
-                ]);
-
-                /* Production End*/
-
-                /* Sandbox Start */
-                /* $response = $client->get('https://survey-apps.bda-net.ci/transfert/v2.0/lots/' . $remittanceData->referenceLot, [
-                    'headers' => [
-                        'x-api-key' => 'RZdJqzjrkVoapWaRCjGmIQkukdOL8e39JQrmW+gH9B+DIjnJbEh1AmUV26OLPAjblWS8jkjAo9j6pMHJOx/sMoPtkB32ha/brVKNJrT3++Qpu+qFa1T2mPVGqKgeGUOGM1QxU71Ts0xnsGpq7IQfX2IA3YGYnJhS8fD+Ggvf2N4KHz9qH6+/Yuj9lxtUNyEN1x57YFkogOjPLqvgdfVk3fbl4p5UgxZyEF+RUiPojpsgsMPfM3dewwd7ysgwlzLv',
-                        'x-client-id' => '9ca1a01c-a55a-4c1c-a5b9-ec09b5aea768',
-                    ],
-                ]); */
-                /* Sendbox End */
+                ]); 
                 $responseBody = json_decode($response->getBody(), true);
                 if (isset($responseBody['statut']) && $responseBody['statut'] == 'TRAITE') {
                     $senderUser = User::where('id', $transaction->user_id)->first();
