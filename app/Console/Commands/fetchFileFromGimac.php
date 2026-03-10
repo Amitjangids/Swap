@@ -54,7 +54,7 @@ class fetchFileFromGimac extends Command {
             Log::info('Running fetchFileFromGimac');
             $filename = 'INCO_PSIG_14007_'.$formattedDateTime.'.XML';
             Storage::disk('sftp')->exists('/Incoming/'.$filename);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->error('An error occurred: ' . $e->getMessage());
         }
 
