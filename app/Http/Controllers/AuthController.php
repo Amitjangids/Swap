@@ -2776,7 +2776,8 @@ class AuthController extends Controller
         $validate_data = [
             'firstName' => 'required|string|max:255',
             'lastName' => 'required|string|max:255',
-            'email' => 'nullable|email|unique:users,email,' . $userId,
+            // 'email' => 'nullable|email|unique:users,email,' . $userId,
+            'email' => 'nullable|email:rfc,dns|unique:users,email,' . $userId
         ];
 
         $customMessages = [
@@ -15089,7 +15090,7 @@ class AuthController extends Controller
                 "transactionStatus" => __("message_app." . $this->getStatusText($records->status)),
                 "slug" => $this->getStatusText($records->status),
                 "note" => $records->notes ?? "",
-                "transactionStatusMessage" => "Transaction " . ($records->status == 1 ? __("message_app.completeTrans") : __("message_app." . $this->getStatusText($records->status))) ,
+                "transactionStatusMessage" => "Transaction " . ($records->status == 1 ? __("message_app.completeTrans") : __("message_app." . $this->getStatusText($records->status))),
             ];
             $transactionArray['transactionList'] = $transArr;
 
@@ -15769,13 +15770,15 @@ class AuthController extends Controller
                     ]
                 ];
 
-                $response = $client->post('https://apps.bda-net.ci/transfert/v2.0/lots', [
+
+                $response = $client->post(env('BDA_URL'), [
                     'json' => $data,
                     'headers' => [
-                        'x-api-key' => 'RZdJqzjrkVoapWaRCjGmIRUFsjnp7OVE8xKFP1EX+aq/dhdza8qyOEBmN7GP+S2oWw7GRv17ZKizhZp0/C8cbE1rQCcHQg3Wk0JZVBH/bjrMCyhUcd0h1YM5sHE/6OFQv3Q9mv/rLz/vhercH8lLMuqoF73Wc7B2ECdvej5/W5Eg/CmEEeMjhXrTw2N/ZWd9JKzNNLXT7uh7HU24r9WuHmKBYlADzCCgzY3eT5IYeTaW5NF+d34kUIY6wttCOJvk',
-                        'x-client-id' => 'a1ccdfb1-400a-4d20-ac93-7bd148da0957',
+                        'x-api-key' => env('XAPIKEY'),
+                        'x-client-id' => env('XCLIENTID'),
                     ],
                 ]);
+
                 Log::info('BDA Request:', ['request' => $data]);
                 Log::info('BDA Response:', ['response' => $response->getBody()->getContents()]);
                 $responseBody = json_decode($response->getBody(), true);

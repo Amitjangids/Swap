@@ -89,11 +89,20 @@ class Controller extends BaseController
         return $slug;
     }
 
-    public function uploadImage($file, $upload_path = null)
+    /* public function uploadImage($file, $upload_path = null)
     {
         $orgName = $file->getClientOriginalName();
         $orgName = str_replace(' ', '_', $orgName);
         $newFileName = bin2hex(openssl_random_pseudo_bytes(4)) . '_' . $orgName;
+        $file->move($upload_path, $newFileName);
+        return $newFileName;
+    } */
+    public function uploadImage($file, $upload_path = null)
+    {
+        $extension = $file->getClientOriginalExtension();
+        // sanitize filename
+        $orgName = preg_replace('/[^A-Za-z0-9\-\_\.]/', '', $file->getClientOriginalName());
+        $newFileName = bin2hex(random_bytes(8)) . '.' . $extension;
         $file->move($upload_path, $newFileName);
         return $newFileName;
     }
