@@ -4,12 +4,13 @@ on:
   push:
     branches:
       - main
-      - production
   pull_request:
+    branches:
+      - main
 
 jobs:
   sonar:
-    name: Sonar Scan
+    name: SonarCloud Scan
     runs-on: ubuntu-latest
 
     steps:
@@ -17,7 +18,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: SonarCloud Scan
+      - name: Sonar Scan
         uses: SonarSource/sonarqube-scan-action@v2
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
