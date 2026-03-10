@@ -4,18 +4,20 @@ on:
   push:
     branches:
       - main
-      - master
+      - production
   pull_request:
 
 jobs:
   sonar:
-    name: SonarQube Scan
+    name: Sonar Scan
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
-      - name: SonarQube Scan
+      - name: SonarCloud Scan
         uses: SonarSource/sonarqube-scan-action@v2
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
