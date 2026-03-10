@@ -3,7 +3,8 @@ name: Sonar Scan
 on:
   push:
     branches:
-      - production
+      - main
+      pull_request:
 
 jobs:
   sonar:
