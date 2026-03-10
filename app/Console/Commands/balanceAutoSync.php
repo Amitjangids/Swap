@@ -61,12 +61,7 @@ class balanceAutoSync extends Command
                     continue;
                 }
 
-                if (!$activeCard) {
-                    /* Log::info([
-                        'Skipped balance sync - Card not active',
-                        'userId' => $trans->userId,
-                        'accountId' => $trans->accountId
-                    ]); */
+                if (!$activeCard) { 
                     continue;
                 }
 
