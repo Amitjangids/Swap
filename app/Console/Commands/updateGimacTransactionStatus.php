@@ -120,8 +120,8 @@ class updateGimacTransactionStatus extends Command
                             'trans_id' => $transaction->id,
                             'payment_mode' => 'wallet2wallet',
                             'closing_balance' => $sender_wallet_amountE,
-                            'created_at' => date('Y-m-d H:i:s'),
-                            'updated_at' => date('Y-m-d H:i:s'),
+                            'created_at' => date(DATE_TIME_FORMAT),
+                            'updated_at' => date(DATE_TIME_FORMAT),
                         ]);
                         $debit->save();
 
@@ -141,8 +141,8 @@ class updateGimacTransactionStatus extends Command
                             'trans_id' => $transaction->id,
                             'payment_mode' => 'wallet2wallet',
                             'closing_balance' => $sender_wallet_amount,
-                            'created_at' => date('Y-m-d H:i:s'),
-                            'updated_at' => date('Y-m-d H:i:s'),
+                            'created_at' => date(DATE_TIME_FORMAT),
+                            'updated_at' => date(DATE_TIME_FORMAT),
                         ]);
                         $debit->save();
 

@@ -194,8 +194,8 @@ class updateKycStatus extends Command
                         'user_id' => $user->id,
                         'notif_title' => $title,
                         'notif_body' => $message,
-                        'created_at' => date('Y-m-d H:i:s'),
-                        'updated_at' => date('Y-m-d H:i:s'),
+                        'created_at' => date(DATE_TIME_FORMAT),
+                        'updated_at' => date(DATE_TIME_FORMAT),
                     ]);
                     $notif->save();
 
@@ -232,8 +232,8 @@ class updateKycStatus extends Command
                     'user_id' => $user->id,
                     'notif_title' => $title,
                     'notif_body' => $message,
-                    'created_at' => date('Y-m-d H:i:s'),
-                    'updated_at' => date('Y-m-d H:i:s'),
+                    'created_at' => date(DATE_TIME_FORMAT),
+                    'updated_at' => date(DATE_TIME_FORMAT),
                 ]);
                 $notif->save();
 

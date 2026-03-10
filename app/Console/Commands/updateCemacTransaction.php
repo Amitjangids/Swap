@@ -140,8 +140,8 @@ class updateCemacTransaction extends Command
                                 'trans_id' => $transaction->id,
                                 'payment_mode' => 'External',
                                 'closing_balance' => $sender_wallet_amountE,
-                                'created_at' => date('Y-m-d H:i:s'),
-                                'updated_at' => date('Y-m-d H:i:s'),
+                                'created_at' => date(DATE_TIME_FORMAT),
+                                'updated_at' => date(DATE_TIME_FORMAT),
                             ]);
                             $credit->save();
                             User::where('id', $transaction->receiver_id)->decrement('wallet_balance', $transaction->amount);

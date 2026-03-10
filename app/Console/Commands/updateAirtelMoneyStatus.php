@@ -95,8 +95,8 @@ class updateAirtelMoneyStatus extends Command
                         'trans_id' => $transaction->id,
                         'payment_mode' => 'airtelmoney',
                         'closing_balance' => $sender_wallet_amount,
-                        'created_at' => date('Y-m-d H:i:s'),
-                        'updated_at' => date('Y-m-d H:i:s'),
+                        'created_at' => date(DATE_TIME_FORMAT),
+                        'updated_at' => date(DATE_TIME_FORMAT),
                     ]);
                     $debit->save();
 
@@ -141,8 +141,8 @@ class updateAirtelMoneyStatus extends Command
                         'user_id' => $senderUser->id,
                         'notif_title' => $title,
                         'notif_body' => $message,
-                        'created_at' => date('Y-m-d H:i:s'),
-                        'updated_at' => date('Y-m-d H:i:s'),
+                        'created_at' => date(DATE_TIME_FORMAT),
+                        'updated_at' => date(DATE_TIME_FORMAT),
                     ]);
                     $notif->save();
 
