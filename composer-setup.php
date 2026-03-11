@@ -828,7 +828,8 @@ class Installer
         $target = $path . DIRECTORY_SEPARATOR . $filename;
         $installed = file_exists($target);
         $write = file_put_contents($target, $data, LOCK_EX);
-        if (file_exists($target)) {
+
+        if (is_file($target)) {
             chmod($target, 0644);
         }
 
@@ -1012,9 +1013,11 @@ class Installer
             if (!rename($this->tmpFile, $this->target)) {
                 $error = sprintf('Could not write to file "%s": %s', $this->target, $this->errHandler->message);
             }
-            if (is_dir($this->target)) {
+
+            if (!empty($this->target) && is_dir($this->target)) {
                 chmod($this->target, 0755);
             }
+
             $this->errHandler->stop();
         }
 
