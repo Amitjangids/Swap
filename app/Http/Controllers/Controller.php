@@ -97,6 +97,7 @@ class Controller extends BaseController
         $file->move($upload_path, $newFileName);
         return $newFileName;
     } */
+
     public function uploadImage($file, $upload_path = null)
     {
         $extension = $file->getClientOriginalExtension();

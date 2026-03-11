@@ -10799,16 +10799,7 @@ class AuthController extends Controller
                     ]
                 ]
             ];
-
-
-            /* $response = $client->post('https://survey-apps.bda-net.ci/transfert/v2.0/lots', [
-                'json' => $data,
-                'headers' => [
-                    'x-api-key' => 'RZdJqzjrkVoapWaRCjGmIUDJLgQPSqXAAaJ8y3ne/dvGoSzzFdJz6T0R0cRazL4wSyExYteJEHu4Xh3DhCMoguG9rlBFfVI+yx8fWtYLdpYv/vO3IdqHeOco+jKI3CrZNmWPlwWZVfqkNZqEaXEfCRBC0L30mrn2mXcQMfveaHmWUN0OeaPbWWS2Cgd34+cj7Qay29jkKbihNiIAPunatQ==',
-                    'x-client-id' => '7766694c-3bb2-4f35-ab50-2b9a34d95ba6',
-                ],
-            ]); */
-
+ 
             $response = $client->post(env('BDA_URL'), [
                 'json' => $data,
                 'headers' => [
@@ -15090,7 +15081,7 @@ class AuthController extends Controller
                 "transactionStatus" => __("message_app." . $this->getStatusText($records->status)),
                 "slug" => $this->getStatusText($records->status),
                 "note" => $records->notes ?? "",
-                "transactionStatusMessage" => "Transaction " . ($records->status == 1 ? __("message_app.completeTrans") : __("message_app." . $this->getStatusText($records->status))),
+                "transactionStatusMessage" => "Transaction " . ($records->status == 1 ? __("message_app.completeTrans") : __("message_app." . $this->getStatusText($records->status))) ,
             ];
             $transactionArray['transactionList'] = $transArr;
 
@@ -15770,7 +15761,6 @@ class AuthController extends Controller
                     ]
                 ];
 
-
                 $response = $client->post(env('BDA_URL'), [
                     'json' => $data,
                     'headers' => [
@@ -15778,7 +15768,6 @@ class AuthController extends Controller
                         'x-client-id' => env('XCLIENTID'),
                     ],
                 ]);
-
                 Log::info('BDA Request:', ['request' => $data]);
                 Log::info('BDA Response:', ['response' => $response->getBody()->getContents()]);
                 $responseBody = json_decode($response->getBody(), true);

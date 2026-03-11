@@ -91,7 +91,7 @@ class OnafriqReportExport implements FromCollection, WithHeadings, WithEvents
                 "Status" => $status,
                 "Transaction Date" => $record->created_at->format('M d, Y h:i:s A'),
             );
-            $i++; 
+            $i++;
         }
         // $result
         return collect($result);

@@ -61,7 +61,7 @@ class balanceAutoSync extends Command
                     continue;
                 }
 
-                if (!$activeCard) { 
+                if (!$activeCard) {
                     continue;
                 }
 
