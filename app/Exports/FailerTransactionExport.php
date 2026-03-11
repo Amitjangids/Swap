@@ -3,14 +3,14 @@
 namespace App\Exports;
 
 use Illuminate\Support\Facades;
-use App\Models\ExcelTransaction; 
-use App\Models\OnafriqaData; 
+use App\Models\ExcelTransaction;
+use App\Models\OnafriqaData;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Sheet;
 use Maatwebsite\Excel\Concerns\WithEvents;
-use Maatwebsite\Excel\Events\AfterSheet; 
+use Maatwebsite\Excel\Events\AfterSheet;
 use Auth;
 
 class FailerTransactionExport implements FromCollection, WithHeadings, WithEvents
@@ -27,7 +27,11 @@ class FailerTransactionExport implements FromCollection, WithHeadings, WithEvent
     public function collection()
     {
         $i = 1;
+
         return $this->records->map(function ($record) use (&$i) {
+            $dateA = "d M, Y";
+            $dateB = "d M, Y";
+            $dateC = "d M, Y";
             $OnafriqaData = OnafriqaData::where('excelTransId', $record->id)->first();
             $amount = number_format($record->amount, 0, '.', ',');
             $status = $record->remarks != "" ? 'Rejected' : $this->getStatusText($record->transaction_status);
@@ -49,14 +53,14 @@ class FailerTransactionExport implements FromCollection, WithHeadings, WithEvent
                 "tel_number" => $record->tel_number, */
                 "country_name" => $record->country_name != '' ? $record->country_name : (isset($OnafriqaData->recipientCountry) && $OnafriqaData->recipientCountry != '' ? $this->getCountryStatus($OnafriqaData->recipientCountry) : '-'),
                 "wallet_name" => $record->wallet_name != '' ? $record->wallet_name : (isset($OnafriqaData->walletManager) && $OnafriqaData->walletManager != '' ? $OnafriqaData->walletManager : '-'),
-                "tel_number" => $record->tel_number != '' ? $record->tel_number : (isset($OnafriqaData->recipientMsisdn) && $OnafriqaData->recipientMsisdn != '' ? $OnafriqaData->recipientMsisdn : '-') ,
-                "amount" => CURR . ' ' .$amount ,
+                "tel_number" => $record->tel_number != '' ? $record->tel_number : (isset($OnafriqaData->recipientMsisdn) && $OnafriqaData->recipientMsisdn != '' ? $OnafriqaData->recipientMsisdn : '-'),
+                "amount" => CURR . ' ' . $amount,
                 "submitted_by" => $record->submitted_by,
-                "submitted_date" => $record->created_at ? date(ONLY_DATE, strtotime($record->created_at)) : '-',
-                "approved_by" => $record->approver_name ? $record->approver_name : '-', 
-                "approved_date" => $record->approved_date ? date(ONLY_DATE, strtotime($record->approved_date)) : '-',
+                "submitted_date" => $record->created_at ? date($dateA, strtotime($record->created_at)) : '-',
+                "approved_by" => $record->approver_name ? $record->approver_name : '-',
+                "approved_date" => $record->approved_date ? date($dateB, strtotime($record->approved_date)) : '-',
                 "merchant_by" => $record->merchant_by ? $record->merchant_by : '-',
-                "approved_merchant_date" => $record->approved_merchant_date ? date(ONLY_DATE, strtotime($record->approved_merchant_date)) : '-',
+                "approved_merchant_date" => $record->approved_merchant_date ? date($dateC, strtotime($record->approved_merchant_date)) : '-',
                 "gimac_status" => $record->remarks ? $record->remarks : '-',
             ];
         });
@@ -87,15 +91,15 @@ class FailerTransactionExport implements FromCollection, WithHeadings, WithEvent
     {
         $styleArray = [
             'font' => [
-                'name'      =>  'Calibri',
-                'size'      =>  13,
-                'bold'      =>  true,
+                'name' => 'Calibri',
+                'size' => 13,
+                'bold' => true,
             ],
             'fill' => [
                 'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
                 'startColor' => [
                     'rgb' => 'dff0d8',
-                ]           
+                ]
             ],
         ];
 
@@ -105,18 +109,18 @@ class FailerTransactionExport implements FromCollection, WithHeadings, WithEvent
                     'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN
                 ],
             ],
-        ];  
+        ];
 
         return [
-            AfterSheet::class => function(AfterSheet $event) use($styleArray, $styleArray1) {
-                $cellRange = 'A1:O1'; 
-                $event->sheet->getDelegate()->setAutoFilter('A1:'.$event->sheet->getDelegate()->getHighestColumn().'1');
+            AfterSheet::class => function (AfterSheet $event) use ($styleArray, $styleArray1) {
+                $cellRange = 'A1:O1';
+                $event->sheet->getDelegate()->setAutoFilter('A1:' . $event->sheet->getDelegate()->getHighestColumn() . '1');
                 $event->sheet->getDelegate()->getStyle($cellRange)->getFont()->setSize(13);
                 $event->sheet->getStyle($cellRange)->applyFromArray($styleArray);
 
                 foreach (range('A', $event->sheet->getHighestDataColumn()) as $col) {
                     $event->sheet->getColumnDimension($col)->setAutoSize(true);
-                } 
+                }
             },
         ];
     }
@@ -141,16 +145,16 @@ class FailerTransactionExport implements FromCollection, WithHeadings, WithEvent
             case 'GW':
                 return "Guinea Bissau";
             case 'ML':
-                return "Mali"; 
+                return "Mali";
             case 'NE':
-                return "Niger"; 
+                return "Niger";
             case 'SN':
-                return "Senegal"; 
+                return "Senegal";
             case 'TG':
-                return "Togo"; 
-            
+                return "Togo";
+
             default:
-                return "-"; 
+                return "-";
         }
     }
 }

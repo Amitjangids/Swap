@@ -51,6 +51,9 @@ class SuccessTransactionExport implements FromCollection,WithHeadings,WithEvents
                 $firstName = $record->first_name;
                 $lastName = $record->name;
             }
+            $dateA = "d M, Y";
+                $dateB = "d M, Y";
+                $dateC = "d M, Y";
             
             return [
                 "id" => $i++,
@@ -65,11 +68,11 @@ class SuccessTransactionExport implements FromCollection,WithHeadings,WithEvents
                 "tel_number" => $record->tel_number != '' ? $record->tel_number : (isset($OnafriqaData->recipientMsisdn) && $OnafriqaData->recipientMsisdn != '' ? $OnafriqaData->recipientMsisdn : '-') ,
                 "amount" => CURR . ' ' .$amount ,
                 "submitted_by" => $record->submitted_by,
-                "submitted_date" => $record->created_at ? date(ONLY_DATE, strtotime($record->created_at)) : '-',
+                "submitted_date" => $record->created_at ? date($dateA, strtotime($record->created_at)) : '-',
                 "approved_by" => $record->approver_name ? $record->approver_name : '-', 
-                "approved_date" => $record->approved_date ? date(ONLY_DATE, strtotime($record->approved_date)) : '-',
+                "approved_date" => $record->approved_date ? date($dateB, strtotime($record->approved_date)) : '-',
                 "merchant_by" => $record->merchant_by ? $record->merchant_by : '-',
-                "approved_merchant_date" => $record->approved_merchant_date ? date(ONLY_DATE, strtotime($record->approved_merchant_date)) : '-',
+                "approved_merchant_date" => $record->approved_merchant_date ? date($dateC, strtotime($record->approved_merchant_date)) : '-',
                 "gimac_status" => $status,
             ];
         }); 

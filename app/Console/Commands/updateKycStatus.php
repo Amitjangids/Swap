@@ -190,12 +190,15 @@ class updateKycStatus extends Command
                         );
                     }
 
+                    $dateA = "'Y-m-d H:i:s'";
+                    $dateB = "'Y-m-d H:i:s'";
+
                     $notif = new Notification([
                         'user_id' => $user->id,
                         'notif_title' => $title,
                         'notif_body' => $message,
-                        'created_at' => date(DATE_TIME_FORMAT),
-                        'updated_at' => date(DATE_TIME_FORMAT),
+                        'created_at' => date($dateA),
+                        'updated_at' => date($dateB),
                     ]);
                     $notif->save();
 
@@ -228,12 +231,14 @@ class updateKycStatus extends Command
                     );
                 }
 
+                $dateA1 = "'Y-m-d H:i:s'";
+                $dateB1 = "'Y-m-d H:i:s'";
                 $notif = new Notification([
                     'user_id' => $user->id,
                     'notif_title' => $title,
                     'notif_body' => $message,
-                    'created_at' => date(DATE_TIME_FORMAT),
-                    'updated_at' => date(DATE_TIME_FORMAT),
+                    'created_at' => date($dateA1),
+                    'updated_at' => date($dateB1),
                 ]);
                 $notif->save();
 
