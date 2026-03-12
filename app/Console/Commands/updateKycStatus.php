@@ -189,7 +189,7 @@ class updateKycStatus extends Command
                             $device_type
                         );
                     }
-
+                    
                     $dateA = "'Y-m-d H:i:s'";
                     $dateB = "'Y-m-d H:i:s'";
 

@@ -31,13 +31,16 @@ use App\Exports\IndividualReportExport;
 use App\Exports\ReferralReportExport;
 use App\Exports\CompleteTransactionExport;
 use Excel;
+use App\Models\UserCard;
+use App\Services\CardService;
 
 class TransactionsController extends Controller
 {
 
-    public function __construct()
+    public function __construct(CardService $cardService)
     {
         $this->middleware('is_adminlogin');
+        $this->cardService = $cardService;
     }
 
     public function index(Request $request)
@@ -55,7 +58,7 @@ class TransactionsController extends Controller
         $query = Transaction::query()
             ->leftJoin('onafriqa_data as onafriq', 'transactions.excel_trans_id', '=', 'onafriq.excelTransId')
             ->leftJoin('excel_transactions', 'transactions.excel_trans_id', '=', 'excel_transactions.id')
-            ->leftJoin('users as receiver_user', 'transactions.receiver_id', '=', 'receiver_user.id') 
+            ->leftJoin('users as receiver_user', 'transactions.receiver_id', '=', 'receiver_user.id')
             ->leftJoin('remittance_data as remittance', 'transactions.excel_trans_id', '=', 'remittance.excel_id');
         $query = $query->sortable();
 
@@ -750,6 +753,9 @@ class TransactionsController extends Controller
                         'status' => 1,
                         'created_at' => date('Y-m-d H:i:s'),
                         'updated_at' => date('Y-m-d H:i:s'),
+                        'entryType' => "ADMIN",
+                        'transactionType' => "SWAPTOSWAP",
+                        'swapDomainName' => 'INTERNAL_SERVER'
                     ]);
                     //                    echo '<pre>';print_r($trans);exit;
                     $trans->save();
@@ -792,6 +798,9 @@ class TransactionsController extends Controller
                         'status' => 1,
                         'created_at' => date('Y-m-d H:i:s'),
                         'updated_at' => date('Y-m-d H:i:s'),
+                        'entryType' => "ADMIN",
+                        'transactionType' => "SWAPTOSWAP",
+                        'swapDomainName' => 'INTERNAL_SERVER'
                     ]);
                     //                    echo '<pre>';print_r($trans);exit;
                     $trans->save();
@@ -1430,6 +1439,15 @@ class TransactionsController extends Controller
         $input = $request->all();
         //    echo"<pre>";print_r($input);die;
         $transaction = Transaction::where('id', $id)->first();
+
+
+
+        $senderModel = $transaction->receiver_id == 1 && $transaction->trans_for == 'Admin' ? "App\Models\Admin" : "App\User";
+        $senderUser = $senderModel::where('id', $transaction->receiver_id)->first();
+
+        $receiverModel = $transaction->user_id == 1 && $transaction->trans_for == 'Admin' ? "App\Models\Admin" : "App\User";
+        $recieverUser = $userInfo = $receiverModel::where('id', $transaction->user_id)->first();
+
         $trans = new Transaction([
             'user_id' => $transaction->receiver_id,
             'receiver_id' => $transaction->user_id,
@@ -1444,20 +1462,60 @@ class TransactionsController extends Controller
             'status' => 1,
             'created_at' => date('Y-m-d H:i:s'),
             'updated_at' => date('Y-m-d H:i:s'),
+
+            "remainingWalletBalance" => ($senderUser->wallet_balance + $input['refund']),
+            "runningBalance" => ($senderUser->wallet_balance + $input['refund']),
+
+            "beforeBalance" => $recieverUser->wallet_balance,
+            "afterBalance" => ($recieverUser->wallet_balance + $input['refund']),
+            
+            "receiverBefore" => ($senderUser->wallet_balance),
+            "receiverAfter" => ($senderUser->wallet_balance - $input['refund']),
+
+
+
+            'entryType' => "ADMIN",
+            'transactionType' => "SWAPTOSWAP",
+            'swapDomainName' => 'INTERNAL_SERVER'
         ]);
         $trans->save();
 
-        $senderModel = $transaction->receiver_id == 1 && $transaction->trans_for == 'Admin' ? "App\Models\Admin" : "App\User";
-        $senderUser = $senderModel::where('id', $transaction->receiver_id)->first();
+
         $sender_wallet_amount = $senderUser->wallet_balance - $input['refund'];
         $senderModel::where('id', $transaction->receiver_id)->update(['wallet_balance' => $sender_wallet_amount]);
+
+        $userCardSender = UserCard::where('userId', $senderUser->id)->where('cardType', 'PHYSICAL')->where('cardStatus', 'Active')->first();
+
+        if (isset($userCardSender) && $userCardSender->cardType == "PHYSICAL" && $userCardSender->cardStatus == "Active") {
+            $postData = json_encode([
+                "currencyCode" => "XAF",
+                "last4Digits" => $userCardSender->last4Digits,
+                "referenceMemo" => "Settlement",
+                "transferAmount" => $input['refund'],
+                "transferType" => "CardToWallet",
+                "mobilePhoneNumber" => "241{$senderUser->phone}"
+            ]);
+            $this->cardService->addWalletCardTopUp($postData, $userCardSender->accountId, $userCardSender->cardType);
+        }
 
         $receiverModel = $transaction->user_id == 1 && $transaction->trans_for == 'Admin' ? "App\Models\Admin" : "App\User";
         $recieverUser = $userInfo = $receiverModel::where('id', $transaction->user_id)->first();
         $receiver_wallet_amount = $recieverUser->wallet_balance + $input['refund'];
         $receiverModel::where('id', $transaction->user_id)->update(['wallet_balance' => $receiver_wallet_amount]);
 
+        $userCardReceiver = UserCard::where('userId', $recieverUser->id)->where('cardType', 'PHYSICAL')->where('cardStatus', 'Active')->first();
 
+        if (isset($userCardReceiver) && $userCardReceiver->cardType == "PHYSICAL" && $userCardReceiver->cardStatus == "Active") {
+            $postData = json_encode([
+                "currencyCode" => "XAF",
+                "last4Digits" => $userCardReceiver->last4Digits,
+                "referenceMemo" => "Settlement",
+                "transferAmount" => $input['refund'],
+                "transferType" => "WalletToCard",
+                "mobilePhoneNumber" => "241{$recieverUser->phone}"
+            ]);
+            $this->cardService->addWalletCardTopUp($postData, $userCardReceiver->accountId, $userCardReceiver->cardType);
+        }
         Session::flash('success_message', "Refund has been successful.");
         return Redirect::to('admin/transactions');
     }
@@ -1997,7 +2055,7 @@ class TransactionsController extends Controller
             ->when($to, function ($q) use ($to) {
                 $dateQ = explode("/", $to);
                 $from1 = $dateQ[0] . " 00:00:00";
-                $too1 = $dateQ[1] . " 23:59:59"; 
+                $too1 = $dateQ[1] . " 23:59:59";
                 $q->whereBetween('t.created_at', [$from1, $too1]);
             });
 
@@ -2279,9 +2337,9 @@ class TransactionsController extends Controller
 
 
         $query->join('users', 'transactions.receiver_id', '=', 'users.id')
-                ->leftJoin('excel_transactions', 'transactions.excel_trans_id', '=', 'excel_transactions.id')
+            ->leftJoin('excel_transactions', 'transactions.excel_trans_id', '=', 'excel_transactions.id')
             ->where('payment_mode', 'External')->where('receiver_id', 746)
-            ->select('transactions.*','excel_transactions.first_name as transaction_receiver_name','excel_transactions.name as transaction_receiver_lastname', 'users.name', 'users.phone');
+            ->select('transactions.*', 'excel_transactions.first_name as transaction_receiver_name', 'excel_transactions.name as transaction_receiver_lastname', 'users.name', 'users.phone');
 
         if ($request->has('sender_phone') && $request->get('sender_phone')) {
             $keyword = $request->get('sender_phone');

@@ -1806,7 +1806,7 @@ class AuthController extends Controller
                     'referralBy' => $referrerTransactionId,
                     'created_at' => date('Y-m-d H:i:s'),
                     'updated_at' => date('Y-m-d H:i:s'),
-                    'swapDomainName' => 'INTERNAL_SERVER'
+                    'swapDomainName' => 'UAT_SERVER'
                 ]);
                 $trans->save();
 
@@ -2322,7 +2322,7 @@ class AuthController extends Controller
 
     public function getCardNew()
     {
-        $startTime = microtime(true);
+        // $startTime = microtime(true);
 
         $user = Auth::user();
 
@@ -2356,11 +2356,11 @@ class AuthController extends Controller
 
             $customerStart = microtime(true);
             $customerDetail = $this->cardService->getCustomerData($card->accountId, $card->cardType);
-            Log::info('Customer API Time: ' . ((microtime(true) - $customerStart) * 1000) . ' ms');
+            // Log::info('Customer API Time: ' . ((microtime(true) - $customerStart) * 1000) . ' ms');
 
             $balanceStart = microtime(true);
             $cardBalance = $this->cardService->getCardBalance($card->accountId, $card->cardType);
-            Log::info('Balance API Time: ' . ((microtime(true) - $balanceStart) * 1000) . ' ms');
+            // Log::info('Balance API Time: ' . ((microtime(true) - $balanceStart) * 1000) . ' ms');
 
             /* -----------------------------
             Balance
@@ -2368,7 +2368,7 @@ class AuthController extends Controller
 
             if (!empty($cardBalance['data'])) {
                 $balance = $cardBalance['data']['balance'] ?? 0;
-                $currencyCode = $cardBalance['data']['currencyCode'] ?? "";
+                $currencyCode = "XAF"; // $cardBalance['data']['currencyCode'] ?? "";
             }
 
             /* -----------------------------
@@ -2427,7 +2427,7 @@ class AuthController extends Controller
             ];
         }
 
-        Log::info('Total API Time: ' . ((microtime(true) - $startTime) * 1000) . ' ms');
+        // Log::info('Total API Time: ' . ((microtime(true) - $startTime) * 1000) . ' ms');
 
         $statusArr = [
             'status' => 'Success',
@@ -3299,7 +3299,7 @@ class AuthController extends Controller
                         "refrence_id" => $refrence_id,
                         "created_at" => date("Y-m-d H:i:s"),
                         "updated_at" => date("Y-m-d H:i:s"),
-                        'swapDomainName' => 'INTERNAL_SERVER'
+                        'swapDomainName' => 'UAT_SERVER'
                     ]);
                     $trans->save();
 
@@ -3486,7 +3486,7 @@ class AuthController extends Controller
                     'entryType' => 'API',
                     "created_at" => date("Y-m-d H:i:s"),
                     "updated_at" => date("Y-m-d H:i:s"),
-                    'swapDomainName' => 'INTERNAL_SERVER'
+                    'swapDomainName' => 'UAT_SERVER'
                 ]);
                 $trans->save();
                 $TransId = $trans->id;
@@ -3789,7 +3789,7 @@ class AuthController extends Controller
                 "refrence_id" => $refrence_id,
                 "created_at" => date("Y-m-d H:i:s"),
                 "updated_at" => date("Y-m-d H:i:s"),
-                'swapDomainName' => 'INTERNAL_SERVER'
+                'swapDomainName' => 'UAT_SERVER'
             ]);
             $trans->save();
 
@@ -4007,7 +4007,7 @@ class AuthController extends Controller
                             'entryType' => 'API',
                             "created_at" => date("Y-m-d H:i:s"),
                             "updated_at" => date("Y-m-d H:i:s"),
-                            'swapDomainName' => 'INTERNAL_SERVER'
+                            'swapDomainName' => 'UAT_SERVER'
                         ]);
                         $trans->save();
                         $TransId = $trans->id;
@@ -4194,7 +4194,7 @@ class AuthController extends Controller
                                 'entryType' => 'API',
                                 "created_at" => date("Y-m-d H:i:s"),
                                 "updated_at" => date("Y-m-d H:i:s"),
-                                'swapDomainName' => 'INTERNAL_SERVER'
+                                'swapDomainName' => 'UAT_SERVER'
                             ]);
                             $trans->save();
                             $TransId = $trans->id;
@@ -4357,7 +4357,7 @@ class AuthController extends Controller
                                     'entryType' => 'API',
                                     "created_at" => date("Y-m-d H:i:s"),
                                     "updated_at" => date("Y-m-d H:i:s"),
-                                    'swapDomainName' => 'INTERNAL_SERVER'
+                                    'swapDomainName' => 'UAT_SERVER'
                                 ]);
                                 $trans->save();
                                 $TransId = $trans->id;
@@ -5752,7 +5752,7 @@ class AuthController extends Controller
             'afterBalance' => $receiver_wallet_amount,
             'created_at' => date('Y-m-d H:i:s'),
             'updated_at' => date('Y-m-d H:i:s'),
-            'swapDomainName' => 'INTERNAL_SERVER'
+            'swapDomainName' => 'UAT_SERVER'
         ]);
 
         $trans->save();
@@ -6158,7 +6158,7 @@ class AuthController extends Controller
             'afterBalance' => $sender_wallet_amount,
             'created_at' => date('Y-m-d H:i:s'),
             'updated_at' => date('Y-m-d H:i:s'),
-            'swapDomainName' => 'INTERNAL_SERVER'
+            'swapDomainName' => 'UAT_SERVER'
         ]);
 
         $trans->save();
@@ -7883,9 +7883,13 @@ class AuthController extends Controller
             'billing_description' => 'Fund Transfer-' . $refrence_id,
             'beforeBalance' => $senderUser->wallet_balance,
             'afterBalance' => ($senderUser->wallet_balance - $total_amount),
+
+            'receiverBefore' => $recieverUser->wallet_balance,
+            'receiverAfter' => ($recieverUser->wallet_balance + $total_amount),
+
             'created_at' => date('Y-m-d H:i:s'),
             'updated_at' => date('Y-m-d H:i:s'),
-            'swapDomainName' => 'INTERNAL_SERVER'
+            'swapDomainName' => 'UAT_SERVER'
         ]);
 
         $trans->save();
@@ -8242,9 +8246,10 @@ class AuthController extends Controller
                 'refrence_id' => $trans_id,
                 'billing_description' => 'SendMoney-' . $refrence_id,
                 'entryType' => 'API',
+                'transactionType' => 'SWAPTOSWAP',
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
-                'swapDomainName' => 'INTERNAL_SERVER'
+                'swapDomainName' => 'UAT_SERVER'
             ]);
             $trans->save();
 
@@ -8515,6 +8520,7 @@ class AuthController extends Controller
         $requestDetail = Transaction::where("id", $request_id)
             ->first();
 
+        $receiverInfo = User::where("id", $requestDetail->receiver_id)->first();
         if (!empty($requestDetail)) {
             if ($requestDetail->payment_mode == "send_money") {
                 $type = 1;
@@ -8592,6 +8598,8 @@ class AuthController extends Controller
                             "total_amount" => $amount,
                             'beforeBalance' => $senderInfo->wallet_balance,
                             'afterBalance' => $remainingWalletBalance,
+                            'receiverBefore' => $receiverInfo->wallet_balance,
+                            'receiverAfter' => $receiverInfo->wallet_balance + ($total_amount - $total_fees),                            
                             "amount_value" => $total_amount,
                             "remainingWalletBalance" => $remainingWalletBalance ?? "",
                             "updated_at" => date("Y-m-d H:i:s"),
@@ -8600,7 +8608,6 @@ class AuthController extends Controller
 
                         $transaction_id = $request_id;
 
-                        $receiverInfo = User::where("id", $requestDetail->receiver_id)->first();
                         $receiver_wallet_amount = $receiverInfo->wallet_balance + ($total_amount - $total_fees);
                         $credit = new TransactionLedger([
                             'user_id' => $receiverInfo->id,
@@ -8904,7 +8911,7 @@ class AuthController extends Controller
                         "refrence_id" => $refrence_id,
                         "created_at" => date("Y-m-d H:i:s"),
                         "updated_at" => date("Y-m-d H:i:s"),
-                        'swapDomainName' => 'INTERNAL_SERVER'
+                        'swapDomainName' => 'UAT_SERVER'
                     ]);
                     $trans->save();
 
@@ -9958,7 +9965,7 @@ class AuthController extends Controller
                     'entryType' => 'API',
                     'created_at' => date('Y-m-d H:i:s'),
                     'updated_at' => date('Y-m-d H:i:s'),
-                    'swapDomainName' => 'INTERNAL_SERVER'
+                    'swapDomainName' => 'UAT_SERVER'
                 ]);
                 $trans->save();
 
@@ -10343,7 +10350,7 @@ class AuthController extends Controller
                     'entryType' => 'API',
                     'created_at' => date('Y-m-d H:i:s'),
                     'updated_at' => date('Y-m-d H:i:s'),
-                    'swapDomainName' => 'INTERNAL_SERVER'
+                    'swapDomainName' => 'UAT_SERVER'
                 ]);
                 $trans->save();
                 $transactionId = $trans->id;
@@ -10799,7 +10806,7 @@ class AuthController extends Controller
                     ]
                 ]
             ];
- 
+
             $response = $client->post(env('BDA_URL'), [
                 'json' => $data,
                 'headers' => [
@@ -10835,7 +10842,7 @@ class AuthController extends Controller
                     'beforeBalance' => $senderUser->wallet_balance,
                     'created_at' => date('Y-m-d H:i:s'),
                     'updated_at' => date('Y-m-d H:i:s'),
-                    'swapDomainName' => 'INTERNAL_SERVER'
+                    'swapDomainName' => 'UAT_SERVER'
                 ]);
                 $trans->save();
 
@@ -11553,7 +11560,7 @@ class AuthController extends Controller
                             'transactionType' => 'SWAPTOONAFRIQ',
                             'created_at' => date('Y-m-d H:i:s'),
                             'updated_at' => date('Y-m-d H:i:s'),
-                            'swapDomainName' => 'INTERNAL_SERVER'
+                            'swapDomainName' => 'UAT_SERVER'
                         ]);
                         $trans->save();
 
@@ -11632,7 +11639,7 @@ class AuthController extends Controller
                             'transactionType' => 'SWAPTOONAFRIQ',
                             'created_at' => date('Y-m-d H:i:s'),
                             'updated_at' => date('Y-m-d H:i:s'),
-                            'swapDomainName' => 'INTERNAL_SERVER'
+                            'swapDomainName' => 'UAT_SERVER'
                         ]);
                         $trans->save();
 
@@ -13735,7 +13742,7 @@ class AuthController extends Controller
                     'note' => $note ?? "",
                     'created_at' => date('Y-m-d H:i:s'),
                     'updated_at' => date('Y-m-d H:i:s'),
-                    'swapDomainName' => 'INTERNAL_SERVER'
+                    'swapDomainName' => 'UAT_SERVER'
                 ]);
                 $trans->save();
                 $transactionId = $trans->id;
@@ -14168,7 +14175,7 @@ class AuthController extends Controller
                     'entryType' => 'API',
                     'created_at' => date('Y-m-d H:i:s'),
                     'updated_at' => date('Y-m-d H:i:s'),
-                    'swapDomainName' => 'INTERNAL_SERVER'
+                    'swapDomainName' => 'UAT_SERVER'
                 ]);
                 $trans->save();
 
@@ -14576,7 +14583,7 @@ class AuthController extends Controller
                     'entryType' => 'API',
                     'created_at' => date('Y-m-d H:i:s'),
                     'updated_at' => date('Y-m-d H:i:s'),
-                    'swapDomainName' => 'INTERNAL_SERVER'
+                    'swapDomainName' => 'UAT_SERVER'
                 ]);
                 $trans->save();
 
@@ -15081,7 +15088,7 @@ class AuthController extends Controller
                 "transactionStatus" => __("message_app." . $this->getStatusText($records->status)),
                 "slug" => $this->getStatusText($records->status),
                 "note" => $records->notes ?? "",
-                "transactionStatusMessage" => "Transaction " . ($records->status == 1 ? __("message_app.completeTrans") : __("message_app." . $this->getStatusText($records->status))) ,
+                "transactionStatusMessage" => "Transaction " . ($records->status == 1 ? __("message_app.completeTrans") : __("message_app." . $this->getStatusText($records->status))),
             ];
             $transactionArray['transactionList'] = $transArr;
 
@@ -15473,7 +15480,7 @@ class AuthController extends Controller
                         'notes' => $note ?? "",
                         'created_at' => date('Y-m-d H:i:s'),
                         'updated_at' => date('Y-m-d H:i:s'),
-                        'swapDomainName' => 'INTERNAL_SERVER'
+                        'swapDomainName' => 'UAT_SERVER'
                     ]);
                     $trans->save();
                     $transactionId = $trans->id;
@@ -15819,7 +15826,7 @@ class AuthController extends Controller
                         'transactionType' => 'SWAPTOBDA',
                         'created_at' => date('Y-m-d H:i:s'),
                         'updated_at' => date('Y-m-d H:i:s'),
-                        'swapDomainName' => 'INTERNAL_SERVER'
+                        'swapDomainName' => 'UAT_SERVER'
                     ]);
                     $trans->save();
 
@@ -17514,7 +17521,7 @@ class AuthController extends Controller
             'entryType' => 'API',
             "created_at" => date("Y-m-d H:i:s"),
             "updated_at" => date("Y-m-d H:i:s"),
-            'swapDomainName' => 'INTERNAL_SERVER'
+            'swapDomainName' => 'UAT_SERVER'
         ]);
         $trans->save();
 
@@ -17718,7 +17725,7 @@ class AuthController extends Controller
             'entryType' => 'API',
             "created_at" => date("Y-m-d H:i:s"),
             "updated_at" => date("Y-m-d H:i:s"),
-            'swapDomainName' => 'INTERNAL_SERVER'
+            'swapDomainName' => 'UAT_SERVER'
         ]);
         $trans->save();
 
@@ -18247,7 +18254,7 @@ class AuthController extends Controller
                         "refrence_id" => $refrence_id,
                         "created_at" => date("Y-m-d H:i:s"),
                         "updated_at" => date("Y-m-d H:i:s"),
-                        'swapDomainName' => 'INTERNAL_SERVER'
+                        'swapDomainName' => 'UAT_SERVER'
                     ]);
                     $trans->save();
 
@@ -18525,7 +18532,7 @@ class AuthController extends Controller
                         "refrence_id" => $refrence_id,
                         "created_at" => date("Y-m-d H:i:s"),
                         "updated_at" => date("Y-m-d H:i:s"),
-                        'swapDomainName' => 'INTERNAL_SERVER'
+                        'swapDomainName' => 'UAT_SERVER'
                     ]);
                     $trans->save();
 
@@ -19222,7 +19229,7 @@ class AuthController extends Controller
                 'walletsource' => (isset($getFullReq['walletsource']) && $getFullReq['walletsource'] != "" ? $getFullReq['walletsource'] : $getFullReq['dstaccounts'][0]['iden']),
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
-                'swapDomainName' => 'INTERNAL_SERVER'
+                'swapDomainName' => 'UAT_SERVER'
             ]);
             $trans->save();
             if ($jsonResponse2->state == "ACCEPTED") {
@@ -19891,7 +19898,7 @@ class AuthController extends Controller
                 'entryType' => 'API',
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
-                'swapDomainName' => 'INTERNAL_SERVER'
+                'swapDomainName' => 'UAT_SERVER'
             ]);
 
             $trans->save();
@@ -19928,7 +19935,7 @@ class AuthController extends Controller
                 'entryType' => 'API',
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
-                'swapDomainName' => 'INTERNAL_SERVER'
+                'swapDomainName' => 'UAT_SERVER'
             ]);
 
             $trans->save();
@@ -20092,7 +20099,7 @@ class AuthController extends Controller
             'afterBalance' => $type === "RECHARGE" ? ($userDetail->wallet_balance - $amount) : ($userDetail->wallet_balance + $amount),
             'created_at' => now(),
             'updated_at' => now(),
-            'swapDomainName' => 'INTERNAL_SERVER'
+            'swapDomainName' => 'UAT_SERVER'
             /* 'beforeBalance' => $userDetail->wallet_balance,
             'afterBalance' => $type === "RECHARGE" ? ($userDetail->wallet_balance - $amount) : ($userDetail->wallet_balance + $amount), */
         ]);
@@ -20314,7 +20321,7 @@ class AuthController extends Controller
             'afterBalance' => $type === "RECHARGE" ? ($userDetail->wallet_balance - $amount) : ($userDetail->wallet_balance + $amount),
             'created_at' => now(),
             'updated_at' => now(),
-            'swapDomainName' => 'INTERNAL_SERVER'
+            'swapDomainName' => 'UAT_SERVER'
             /* 'beforeBalance' => $userDetail->wallet_balance,
             'afterBalance' => $type === "RECHARGE" ? ($userDetail->wallet_balance - $amount) : ($userDetail->wallet_balance + $amount), */
         ]);
